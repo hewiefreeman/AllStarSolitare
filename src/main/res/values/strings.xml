@@ -1,0 +1,65 @@
+<resources>
+
+    <!--    GENERAL STRINGS    -->
+
+    <string name="app_name">All-Star Solitare</string>
+    <string name="all_star">All-Star</string>
+    <string name="solitaire">Solitaire</string>
+
+    <string name="native_currency_symbol">$</string>
+
+    <string name="guest">Guest</string>
+    <string name="g_for_guest">G</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- ACTIVITY TITLES -->
+    <string name="title_activity_login">Login Screen</string>
+    <string name="title_activity_game_select">Game Select</string>
+
+    <!--    LOGIN SCREEN    -->
+
+    <string name="google_login_error">Error connecting to Google! Try updating Google Play Services.</string>
+
+    <!--    GAME SELECT SCREEN    -->
+
+    <string name="game_select_log_out_dialog">Log out?</string>
+    <string name="game_select_log_out_dialog_saved">(Game saved)</string>
+
+    <string name="game_select_menu_your_scores">Your Scores</string>
+    <string name="game_select_menu_leader_board">Leaderboard</string>
+    <string name="game_select_menu_log_out">Log Out</string>
+
+    <string name="play_single">Play Single-Draw</string>
+    <string name="play_three">Play Three-Draw</string>
+    <string name="practice_single">Practice Single-Draw</string>
+    <string name="practice_three">Practice Three-Draw</string>
+    <string name="practice_modes">Practice Modes:</string>
+
+    <string name="level">Level: </string>
+
+    <string name="game_select_error_header_image_load">Error loading header image!</string>
+
+    <!--    GAME BOARD    -->
+
+    <string name="ace_pile">ACE PILE</string>
+
+    <!--    BUTTON STRINGS    -->
+
+    <string name="login_guest">Guest Login</string>
+    <string name="login_google">Google Login</string>
+
+    <!--    CONTENT DESCRIPTIONS    -->
+
+    <string name="game_select_desc">All-Star Solitaire game selection screen</string>
+
+    <!--    WIDGET STRINGS    -->
+
+    <string name="widget_title">All-Star</string>
+
+    <!--    TESTING STRINGS    -->
+
+    <string name="test_scroll_text_filler">Scroll to see:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHi.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+</resources>

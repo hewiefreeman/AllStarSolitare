@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "78744615041",
+    "project_id": "all-star-solitaire"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78744615041:android:5b59b0f8d5f50769",
+        "android_client_info": {
+          "package_name": "com.metagaming.allstarsolitare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78744615041-9at93vrvpm9s7r2rr8jjih3kkfgpo4nd.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "78744615041-ccf3q6o2bci04u22il7f50c8elr5obsv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.metagaming.allstarsolitare",
+            "certificate_hash": "780723015a1bdbee1d3791f1c0e36fb89c0c2afe"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA15_bL4UWLWB35jG2bzftv0-uxS8Laphk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

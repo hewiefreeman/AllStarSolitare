@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res-auto"
+      xmlns:android1="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.metagaming.allstarsolitare.gameSelect.GameSelectActivity">
+    <item android1:id="@+id/game_select_menu_your_scores"
+          android:title="@string/game_select_menu_your_scores"
+          android1:title="@string/game_select_menu_your_scores"
+          android:showAsAction="never"/>
+    <item android1:id="@+id/game_select_menu_leader_board"
+          android:title="@string/game_select_menu_leader_board"
+            android1:title="@string/game_select_menu_leader_board"
+            android:showAsAction="never"/>
+    <item android1:id="@+id/game_select_menu_log_out"
+          android:title="@string/game_select_menu_log_out"
+          android1:title="@string/game_select_menu_log_out"
+          android:showAsAction="never"/>
+</menu>

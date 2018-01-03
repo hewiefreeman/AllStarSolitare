@@ -1,0 +1,58 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.metagaming.allstarsolitare.SplashScreen"
+    android:background="@color/colorPrimaryDark"
+    android:fitsSystemWindows="true">
+
+    <View
+        android:id="@+id/splash_screen_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/splash_all_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/all_star"
+        android:textStyle="normal"
+        android:textColor="@color/text_white"
+        android:textSize="26sp"
+        android:padding="0dp"
+
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/splash_screen_divider"/>
+
+    <TextView
+        android:id="@+id/splash_solitaire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/solitaire"
+        android:textStyle="bold"
+        android:textColor="@color/text_white"
+        android:textSize="32sp"
+        android:padding="0dp"
+
+        app:layout_constraintTop_toBottomOf="@id/splash_screen_divider"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        />
+
+    <ProgressBar
+        android:id="@+id/splash_loading_indicator"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"/>
+
+</android.support.constraint.ConstraintLayout>

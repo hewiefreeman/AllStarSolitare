@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- MAIN COLORS -->
+
+    <color name="colorPrimary">#3399CC</color>
+    <color name="colorPrimaryDark">#006B9B</color>
+    <color name="lightPrimary">#D2F0FF</color>
+    <color name="colorAccent">#FF7D03</color>
+    <color name="colorAccentLight">#ffd7b3</color>
+
+    <!-- WIDGET COLORS -->
+
+    <color name="widget_bg">#c8006b9b</color>
+    <color name="widget_list_item_bg">#c83399CC</color>
+
+    <!-- TEXT FG/BG COLORS -->
+
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_light_grey">#e1e1e1</color>
+    <color name="text_grey">#bfbfbf</color>
+    <color name="text_dark_grey">#737373</color>
+    <color name="text_light_dark_grey">#353535</color>
+    <color name="text_darker_grey">#232323</color>
+    <color name="text_black">#000000</color>
+
+    <!-- MISC COLORS -->
+
+    <color name="transparent">#00ffffff</color>
+</resources>

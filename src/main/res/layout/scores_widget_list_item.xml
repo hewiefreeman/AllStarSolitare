@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="3dp"
+              android:layout_marginLeft="3dp"
+              android:layout_marginRight="3dp"
+              android:layout_marginStart="3dp"
+              android:background="@drawable/widget_list_bg_shape"
+              android:gravity="center_vertical"
+              android:paddingEnd="5dp"
+              android:paddingLeft="5dp"
+              android:paddingRight="5dp"
+              android:paddingStart="5dp">
+
+    <TextView
+        android:id="@+id/scores_widget_user"
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+
+        android:layout_weight="1"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        android:textColor="@color/text_white"
+
+        android:textSize="16sp"
+        android:textStyle="normal"
+        tools:text="Nick Debergue"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/scores_widget_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccentLight"
+            android:maxLines="1"
+
+            android:paddingEnd="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingStart="0dp"
+            tools:text="15489"/>
+    </LinearLayout>
+
+</LinearLayout>

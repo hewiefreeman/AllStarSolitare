@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/widget_bg"
+              android:elevation="3dp"
+              android:layout_margin="5dp"
+              android:padding="0dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/scores_widget_title_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="2dp"
+        android:padding="0dp"
+        android:text="@string/all_star"
+        android:textAlignment="center"
+        android:textColor="@color/text_white"
+        android:textSize="17sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/scores_widget_title_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="2dp"
+        android:padding="0dp"
+        android:text="@string/solitaire"
+        android:textAlignment="center"
+        android:textColor="@color/text_white"
+        android:textSize="16sp"
+        android:textStyle="normal"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_gravity="fill_vertical"
+        android:background="@color/lightPrimary"
+        android:layout_marginBottom="3dp"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scores_widget_list">
+
+    </ListView>
+
+</LinearLayout>
