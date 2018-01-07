@@ -47,34 +47,28 @@ public class LogicHelper {
         if(y >= game.fieldStackLocation1.y){
             //DRAGGED ONTO FIELD STACK...
             if((x > game.fieldStackLocation1.x) && (x < game.fieldStackLocation1.x+game.cardHelper.cardWidth)){
-                intoStack = 1;
+                droppedCardOverCardStack(cardName, 1);
 
             }else if((x > game.fieldStackLocation2.x) && (x < game.fieldStackLocation2.x+game.cardHelper.cardWidth)){
-                intoStack = 2;
+                droppedCardOverCardStack(cardName, 2);
 
             }else if((x > game.fieldStackLocation3.x) && (x < game.fieldStackLocation3.x+game.cardHelper.cardWidth)){
-                intoStack = 3;
+                droppedCardOverCardStack(cardName, 3);
 
             }else if((x > game.fieldStackLocation4.x) && (x < game.fieldStackLocation4.x+game.cardHelper.cardWidth)){
-                intoStack = 4;
+                droppedCardOverCardStack(cardName, 4);
 
             }else if((x > game.fieldStackLocation5.x) && (x < game.fieldStackLocation5.x+game.cardHelper.cardWidth)){
-                intoStack = 5;
+                droppedCardOverCardStack(cardName, 5);
 
             }else if((x > game.fieldStackLocation6.x) && (x < game.fieldStackLocation6.x+game.cardHelper.cardWidth)){
-                intoStack = 6;
+                droppedCardOverCardStack(cardName, 6);
 
             }else if((x > game.fieldStackLocation7.x) && (x < game.fieldStackLocation7.x+game.cardHelper.cardWidth)){
-                intoStack = 7;
+                droppedCardOverCardStack(cardName, 7);
 
             }else{
                 invalidMatch(cardName);
-            }
-
-            //
-            if(intoStack > 0){
-                droppedCardOverCardStack(cardName, intoStack);
-
             }
         }if(y < game.fieldStackLocation1.y){
             if(x >= game.spadesPileLocation.x
@@ -270,6 +264,13 @@ public class LogicHelper {
             deckCardOn--;
             makePrevDeckCardClickable();
         }
+
+        //
+        if(toSuit.size()-2 >= 0){
+            game.scoreKeeper.checkForUniqueMove(cardName, toSuit.get(toSuit.size() - 2), true);
+        }else{
+            game.scoreKeeper.checkForUniqueMove(cardName, "empty", true);
+        }
     }
 
     private void validCardStackMatch(String cardName, int stackNumbTo){
@@ -340,6 +341,18 @@ public class LogicHelper {
 
             checkForAvailableCardInFieldStack(Integer.parseInt(stackFrom));
         }
+
+        //
+        if(cardStackTo.size()-2 >= 0){
+            if(game.deck.getIsFacingUp(cardStackTo.get(cardStackTo.size() - 2))){
+                game.scoreKeeper.checkForUniqueMove(cardName, cardStackTo.get(cardStackTo.size() - 2), false);
+            }else{
+                game.scoreKeeper.checkForUniqueMove(cardName, "empty", false);
+            }
+        }else{
+            game.scoreKeeper.checkForUniqueMove(cardName, "empty", false);
+        }
+
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -557,7 +570,7 @@ public class LogicHelper {
             deckCardOn = deckCardOn+cardsAvailable;
         }
 
-
+        game.scoreKeeper.drawnFromDeck();
     }
 
     private void makePrevDeckCardClickable(){
@@ -609,6 +622,9 @@ public class LogicHelper {
         String nextDeckCardName = game.deck.deckStack.get(game.deck.deckStack.size() - (deckCardOn + 1));
         CardView nextDeckCard = game.mainLayout.findViewById(game.deck.getCardId(nextDeckCardName));
         new CardTouchListener().init(nextDeckCard, game, context);
+
+        //
+        game.scoreKeeper.resetDeck();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
