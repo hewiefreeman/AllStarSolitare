@@ -12,10 +12,6 @@ import java.util.TimerTask;
 
 import static com.google.android.gms.internal.zzahn.runOnUiThread;
 
-/**
- * Created by LarryJosher on 1/6/2018.
- */
-
 public class GameBoardTimer {
 
     long startTime;
