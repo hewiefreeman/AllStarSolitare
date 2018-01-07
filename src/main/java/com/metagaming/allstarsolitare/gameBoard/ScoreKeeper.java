@@ -32,9 +32,21 @@ public class ScoreKeeper {
         timesThroughDeck = 0;
     }
 
-    void checkForUniqueMove(String cardPlacing, String cardTo, Boolean toSuiteStack){
-        String moveChecking = cardPlacing+">"+cardTo;
-        String moveCheckingReverse = cardTo+">"+cardPlacing;
+    void checkForUniqueMove(String cardPlacing, String cardTo, Boolean toSuiteStack, Boolean fromSuiteStack){
+        String moveChecking;
+        String moveCheckingReverse;
+
+        if(fromSuiteStack){
+            moveChecking = cardPlacing+">suited";
+            moveCheckingReverse = "suited>"+cardPlacing;
+        }else if(toSuiteStack){
+            moveChecking = cardPlacing+">suited";
+            moveCheckingReverse = "suited>"+cardPlacing;
+        }else{
+            moveChecking = cardPlacing+">"+cardTo;
+            moveCheckingReverse = cardTo+">"+cardPlacing;
+        }
+
         if(!movesList.contains(moveChecking) && !movesList.contains(moveCheckingReverse)){
             givePoints(toSuiteStack);
         }
@@ -46,18 +58,18 @@ public class ScoreKeeper {
         int bonusPoints = 0;
 
         if(movesThisTurn >= 2){
-            bonusPoints = 5+(5*(movesThisTurn-1));
+            bonusPoints = 15+(5*(movesThisTurn-1));
         }
 
         Log.d(TAG, "BONUS POINTS: "+bonusPoints);
         Log.d(TAG, "MOVES THIS TURN: "+movesThisTurn);
 
         if(toSuiteStack){
-            yourScore += 100+bonusPoints;
-            Log.d(TAG, "POINTS GIVEN: "+(100+bonusPoints));
+            yourScore += 200+bonusPoints;
+            Log.d(TAG, "POINTS GIVEN: "+(200+bonusPoints));
         }else{
-            yourScore += 20+bonusPoints;
-            Log.d(TAG, "POINTS GIVEN: "+(20+bonusPoints));
+            yourScore += 50+bonusPoints;
+            Log.d(TAG, "POINTS GIVEN: "+(50+bonusPoints));
         }
 
         scoreText.setText(String.valueOf(yourScore));

@@ -265,11 +265,11 @@ public class LogicHelper {
             makePrevDeckCardClickable();
         }
 
-        //
+        //SCORING
         if(toSuit.size()-2 >= 0){
-            game.scoreKeeper.checkForUniqueMove(cardName, toSuit.get(toSuit.size() - 2), true);
+            game.scoreKeeper.checkForUniqueMove(cardName, toSuit.get(toSuit.size() - 2), true, false);
         }else{
-            game.scoreKeeper.checkForUniqueMove(cardName, "empty", true);
+            game.scoreKeeper.checkForUniqueMove(cardName, "empty", true, false);
         }
     }
 
@@ -282,6 +282,8 @@ public class LogicHelper {
         int facingDown = numberOfFacingUpAndDownCardsInFieldStack.get(1);
 
         int cardIndex = game.deck.getCardStackIndex(cardName, getFieldStackList(stackFrom));
+        Boolean cameFromFieldStack = false;
+        Boolean cameFromSuiteStack = false;
 
         //
         if(stackFrom.equals("deck") || stackFrom.equals("club") || stackFrom.equals("spade") || stackFrom.equals("heart") || stackFrom.equals("diamond")){
@@ -310,10 +312,12 @@ public class LogicHelper {
                 String topSuiteCardName = cardStackFrom.get(cardStackFrom.size()-1);
                 CardView topSuiteCard = game.mainLayout.findViewById(game.deck.getCardId(topSuiteCardName));
                 new CardTouchListener().init(topSuiteCard, game, context);
+                cameFromSuiteStack = true;
             }
 
         }else{
             //CAME FROM FIELD STACK
+            cameFromFieldStack = true;
             //ANIMATE CARD(S) TO POSITION(S)
             for(int i = cardIndex; i < cardStackFrom.size(); i++){
                 CardView cardView = game.mainLayout.findViewById(game.deck.getCardId(cardStackFrom.get(i)));
@@ -341,17 +345,40 @@ public class LogicHelper {
 
             checkForAvailableCardInFieldStack(Integer.parseInt(stackFrom));
         }
+        //SCORE JUDGEMENT
+        if(cameFromFieldStack){
+            //CHECK IF CARD UNDER 1st IS FACE UP
+            Boolean card1Up = false;
+            if(cardStackFrom.size()-1 >= 0){
+                if(game.deck.getIsFacingUp(cardStackFrom.get(cardStackFrom.size()-1))){
+                    card1Up = true;
+                }
+            }
+            //CHECK IF CARD UNDER 2nd IS FACE UP
+            Boolean card2Up = false;
+            if(cardStackTo.size()-1 >= 0){
+                if(game.deck.getIsFacingUp(cardStackTo.get(cardStackTo.size()-1))){
+                    card2Up = true;
+                }
+            }
+            //IF BOTH ARE UP, return TO PASS SCORING
+            if(card1Up && card2Up){
+                return;
+            }
+        }
 
         //
         if(cardStackTo.size()-2 >= 0){
             if(game.deck.getIsFacingUp(cardStackTo.get(cardStackTo.size() - 2))){
-                game.scoreKeeper.checkForUniqueMove(cardName, cardStackTo.get(cardStackTo.size() - 2), false);
+                game.scoreKeeper.checkForUniqueMove(cardName, cardStackTo.get(cardStackTo.size() - 2), false, cameFromSuiteStack);
             }else{
-                game.scoreKeeper.checkForUniqueMove(cardName, "empty", false);
+                game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack);
             }
         }else{
-            game.scoreKeeper.checkForUniqueMove(cardName, "empty", false);
+            game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack);
         }
+
+
 
     }
 
