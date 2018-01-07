@@ -64,6 +64,7 @@ class Game {
     AnimationHelper animationHelper;
     LogicHelper logicHelper;
     GameBoardTimer gameBoardTimer;
+    ScoreKeeper scoreKeeper;
 
     // GAME TYPE
     // SINGLE DRAW = 1
@@ -94,6 +95,8 @@ class Game {
         logicHelper = new LogicHelper();
         logicHelper.init(this, gameContext);
         gameBoardTimer = new GameBoardTimer();
+        scoreKeeper = new ScoreKeeper();
+        scoreKeeper.init(this);
 
         //WHIP OUT AND SHUFFLE THE DECK
         deck = new Deck();

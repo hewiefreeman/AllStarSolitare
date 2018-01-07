@@ -43,37 +43,38 @@ public class LogicHelper {
     }
 
     void checkDrag(int x, int y, String cardName){
+        int intoStack = 0;
         if(y >= game.fieldStackLocation1.y){
             //DRAGGED ONTO FIELD STACK...
             if((x > game.fieldStackLocation1.x) && (x < game.fieldStackLocation1.x+game.cardHelper.cardWidth)){
-                Log.d(TAG, "CHECKING DRAG ("+x+","+y+"): 1");
-                droppedCardOverCardStack(cardName, 1);
+                intoStack = 1;
 
             }else if((x > game.fieldStackLocation2.x) && (x < game.fieldStackLocation2.x+game.cardHelper.cardWidth)){
-                Log.d(TAG, "CHECKING DRAG ("+x+","+y+"): 2");
-                droppedCardOverCardStack(cardName, 2);
+                intoStack = 2;
 
             }else if((x > game.fieldStackLocation3.x) && (x < game.fieldStackLocation3.x+game.cardHelper.cardWidth)){
-                Log.d(TAG, "CHECKING DRAG ("+x+","+y+"): 3");
-                droppedCardOverCardStack(cardName, 3);
+                intoStack = 3;
 
             }else if((x > game.fieldStackLocation4.x) && (x < game.fieldStackLocation4.x+game.cardHelper.cardWidth)){
-                Log.d(TAG, "CHECKING DRAG ("+x+","+y+"): 4");
-                droppedCardOverCardStack(cardName, 4);
+                intoStack = 4;
 
             }else if((x > game.fieldStackLocation5.x) && (x < game.fieldStackLocation5.x+game.cardHelper.cardWidth)){
-                Log.d(TAG, "CHECKING DRAG ("+x+","+y+"): 5");
-                droppedCardOverCardStack(cardName, 5);
+                intoStack = 5;
 
             }else if((x > game.fieldStackLocation6.x) && (x < game.fieldStackLocation6.x+game.cardHelper.cardWidth)){
-                Log.d(TAG, "CHECKING DRAG ("+x+","+y+"): 6");
-                droppedCardOverCardStack(cardName, 6);
+                intoStack = 6;
 
             }else if((x > game.fieldStackLocation7.x) && (x < game.fieldStackLocation7.x+game.cardHelper.cardWidth)){
-                Log.d(TAG, "CHECKING DRAG ("+x+","+y+"): 7");
-                droppedCardOverCardStack(cardName, 7);
+                intoStack = 7;
+
             }else{
                 invalidMatch(cardName);
+            }
+
+            //
+            if(intoStack > 0){
+                droppedCardOverCardStack(cardName, intoStack);
+
             }
         }if(y < game.fieldStackLocation1.y){
             if(x >= game.spadesPileLocation.x
