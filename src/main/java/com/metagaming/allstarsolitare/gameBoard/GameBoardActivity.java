@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.metagaming.allstarsolitare.R;
 
@@ -15,6 +16,8 @@ public class GameBoardActivity extends AppCompatActivity {
     //MAIN LAYOUT
     FrameLayout mainLayout;
     FrameLayout cardsHolder;
+    TextView timeText;
+    TextView scoreText;
 
     //GAME LOGIC
     Game game;
@@ -38,6 +41,8 @@ public class GameBoardActivity extends AppCompatActivity {
         //MAIN LAYOUT
         mainLayout = findViewById(R.id.game_board_frame_layout);
         cardsHolder = findViewById(R.id.game_board_cards_holder);
+        timeText = findViewById(R.id.game_board_timer_text);
+        scoreText = findViewById(R.id.game_board_score_text);
 
         //INITIALIZE GAME
         game = new Game();
@@ -67,6 +72,10 @@ public class GameBoardActivity extends AppCompatActivity {
             game.initGame(this, true);
             restoreBundle = savedInstanceState;
         }
+
+        //SET INITIAL TIME AND SCORE
+        timeText.setText("00:00");
+        scoreText.setText("0");
     }
 
     @Override
