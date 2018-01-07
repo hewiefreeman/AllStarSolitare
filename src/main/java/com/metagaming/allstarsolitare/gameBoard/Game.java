@@ -63,13 +63,14 @@ class Game {
     CardHelper cardHelper;
     AnimationHelper animationHelper;
     LogicHelper logicHelper;
+    GameBoardTimer gameBoardTimer;
 
     // GAME TYPE
     // SINGLE DRAW = 1
     // THREE DRAW = 2
     int gameType;
 
-    //
+    //SETUP VARS
     int setupCardOn;
     int setupStackOn;
     int setupStacksCompleted;
@@ -92,6 +93,7 @@ class Game {
         animationHelper = new AnimationHelper();
         logicHelper = new LogicHelper();
         logicHelper.init(this, gameContext);
+        gameBoardTimer = new GameBoardTimer();
 
         //WHIP OUT AND SHUFFLE THE DECK
         deck = new Deck();
@@ -172,6 +174,9 @@ class Game {
     }
 
     void initGame(){
+        //START TIMER
+        gameBoardTimer.initTimer(mainLayout);
+
         //FLIP STARTING CARDS
         for(int i = 0; i < 7; i++){
             String cardName = logicHelper.getFieldStackList(i+1).get(i);

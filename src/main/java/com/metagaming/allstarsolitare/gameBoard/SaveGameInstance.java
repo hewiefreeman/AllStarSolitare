@@ -54,6 +54,9 @@ class SaveGameInstance {
             bundle.putInt("setupRestores", game.setupRestores);
         }
 
+        //TIME AND SCORE
+        bundle.putLong("timeElapsed", game.gameBoardTimer.timeElapsed);
+
         //
         return bundle;
     }

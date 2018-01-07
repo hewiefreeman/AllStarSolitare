@@ -45,6 +45,7 @@ public class GameBoardActivity extends AppCompatActivity {
         game.cardsHolder = cardsHolder;
 
         if(savedInstanceState == null){
+            //FIST LOAD
             Log.d(TAG, "On-Create: NO SAVED INSTANCE!");
             game.gameType = getIntent().getIntExtra("gameType", 1);
             game.initGame(this, false);
@@ -60,6 +61,7 @@ public class GameBoardActivity extends AppCompatActivity {
             restoreBundle = new Bundle();
 
         }else if(savedInstanceState.containsKey("gameType")){
+            //RESTORE GAME
             Log.d(TAG, "On-Create: USING SAVED INSTANCE TO RESTORE GAME");
             game.gameType = savedInstanceState.getInt("gameType");
             game.initGame(this, true);
@@ -73,18 +75,23 @@ public class GameBoardActivity extends AppCompatActivity {
 
         //
         if(game.inSetup){
-            //restart setup timer
+            //GAME WAS IN SETUP
             game.makeSetupTimer(((28-game.setupCardOn)*100)+1000).start();
+
         }else if(restoreBundle != null && restoreBundle.size() > 0){
+            //RESTORED GAME
             Log.d(TAG, "RESTORING INSTANCE... ON START");
             onStartSetup();
             new RestoreGameState().restoreGame(game, restoreBundle, this);
             restoreBundle = new Bundle();
 
         }else if(restoreBundle != null && restoreBundle.size() == 0){
-            //do nothing
+            //RETURNED FROM BACKGROUND
+            game.gameBoardTimer.startTimer();
             Log.d(TAG, "RESTORE BUNDLE IS NOT NULL, BUT EMPTY!");
+
         }else if(restoreBundle == null){
+            //INITIALIZING THE GAME
             if(!game.gameInited && !game.inSetup){
                 onStartSetup();
                 game.setUpGame();
@@ -92,6 +99,15 @@ public class GameBoardActivity extends AppCompatActivity {
         }
 
         Log.d(TAG, "onStart()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(game.gameInited){
+            game.gameBoardTimer.startTime = System.currentTimeMillis()-game.gameBoardTimer.timeElapsed;
+            game.gameBoardTimer.startTimer();
+        }
     }
 
     private void onStartSetup(){
@@ -130,6 +146,8 @@ public class GameBoardActivity extends AppCompatActivity {
         pausingActivity = true;
         this.onSaveInstanceState(new Bundle());
         pausingActivity = false;
+
+        game.gameBoardTimer.pauseTimer();
 
         Log.d(TAG, "PAUSED ACTIVITY");
 

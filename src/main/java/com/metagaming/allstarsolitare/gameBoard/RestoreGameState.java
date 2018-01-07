@@ -6,8 +6,11 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.metagaming.allstarsolitare.R;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 
 class RestoreGameState {
@@ -435,5 +438,16 @@ class RestoreGameState {
                 game.initGame();
             }
         }
+
+        //RESTORE TIME
+        game.gameBoardTimer = new GameBoardTimer();
+        game.gameBoardTimer.timerText = game.mainLayout.findViewById(R.id.game_board_timer_text);
+        game.gameBoardTimer.theTimer = new Timer();
+        game.gameBoardTimer.timeElapsed = restoreBundle.getLong("timeElapsed");
+        game.gameBoardTimer.startTime = System.currentTimeMillis()-(game.gameBoardTimer.timeElapsed);
+        game.gameBoardTimer.startTimer();
+
+        //RESTORE SCORE
+
     }
 }
