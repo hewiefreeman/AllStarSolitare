@@ -12,6 +12,7 @@
     <!-- WIDGET COLORS -->
 
     <color name="widget_bg">#c8006b9b</color>
+
     <color name="widget_list_item_bg">#c83399CC</color>
 
     <!-- TEXT FG/BG COLORS -->
