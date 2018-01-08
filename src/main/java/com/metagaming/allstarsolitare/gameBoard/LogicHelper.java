@@ -32,6 +32,9 @@ public class LogicHelper {
     //
     int draggingCardId;
 
+    //
+    String lastMove;
+
     void init(Game tempGame, Context tempContext){
         game = tempGame;
         context = tempContext;
@@ -40,6 +43,7 @@ public class LogicHelper {
         deckCardOn = 0;
         draggingCardId = -1;
         cardsInHandUsed = 0;
+        lastMove = "";
     }
 
     void checkDrag(int x, int y, String cardName){
@@ -271,6 +275,9 @@ public class LogicHelper {
         }else{
             game.scoreKeeper.checkForUniqueMove(cardName, "empty", true, false);
         }
+
+        //SET lastMove
+        lastMove = "toSuite";
     }
 
     private void validCardStackMatch(String cardName, int stackNumbTo){
@@ -363,6 +370,7 @@ public class LogicHelper {
             }
             //IF BOTH ARE UP, return TO PASS SCORING
             if(card1Up && card2Up){
+                lastMove = "leetSwitch";
                 return;
             }
         }
@@ -378,8 +386,8 @@ public class LogicHelper {
             game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack);
         }
 
-
-
+        //SET lastMove
+        lastMove = "toStack";
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////

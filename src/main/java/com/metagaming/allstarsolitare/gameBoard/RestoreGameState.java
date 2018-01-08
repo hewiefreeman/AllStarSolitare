@@ -448,6 +448,10 @@ class RestoreGameState {
         game.gameBoardTimer.startTimer();
 
         //RESTORE SCORE
-
+        game.scoreKeeper.yourScore = restoreBundle.getInt("yourScore");
+        game.scoreKeeper.movesThisTurn = restoreBundle.getInt("movesThisTurn");
+        game.scoreKeeper.timesThroughDeck = restoreBundle.getInt("timesThroughDeck");
+        game.scoreKeeper.movesList = restoreBundle.getStringArrayList("movesList");
+        game.scoreKeeper.scoreText.setText(String.valueOf(game.scoreKeeper.yourScore));
     }
 }
