@@ -32,9 +32,6 @@ public class LogicHelper {
     //
     int draggingCardId;
 
-    //
-    String lastMove;
-
     void init(Game tempGame, Context tempContext){
         game = tempGame;
         context = tempContext;
@@ -43,11 +40,9 @@ public class LogicHelper {
         deckCardOn = 0;
         draggingCardId = -1;
         cardsInHandUsed = 0;
-        lastMove = "";
     }
 
     void checkDrag(int x, int y, String cardName){
-        int intoStack = 0;
         if(y >= game.fieldStackLocation1.y){
             //DRAGGED ONTO FIELD STACK...
             if((x > game.fieldStackLocation1.x) && (x < game.fieldStackLocation1.x+game.cardHelper.cardWidth)){
@@ -271,13 +266,10 @@ public class LogicHelper {
 
         //SCORING
         if(toSuit.size()-2 >= 0){
-            game.scoreKeeper.checkForUniqueMove(cardName, toSuit.get(toSuit.size() - 2), true, false);
+            game.scoreKeeper.checkForUniqueMove(cardName, toSuit.get(toSuit.size() - 2), true, false, "", "");
         }else{
-            game.scoreKeeper.checkForUniqueMove(cardName, "empty", true, false);
+            game.scoreKeeper.checkForUniqueMove(cardName, "empty", true, false, "", "");
         }
-
-        //SET lastMove
-        lastMove = "toSuite";
     }
 
     private void validCardStackMatch(String cardName, int stackNumbTo){
@@ -291,6 +283,9 @@ public class LogicHelper {
         int cardIndex = game.deck.getCardStackIndex(cardName, getFieldStackList(stackFrom));
         Boolean cameFromFieldStack = false;
         Boolean cameFromSuiteStack = false;
+
+        String bonusType = "";
+        String bonusParams = "";
 
         //
         if(stackFrom.equals("deck") || stackFrom.equals("club") || stackFrom.equals("spade") || stackFrom.equals("heart") || stackFrom.equals("diamond")){
@@ -363,31 +358,26 @@ public class LogicHelper {
             }
             //CHECK IF CARD UNDER 2nd IS FACE UP
             Boolean card2Up = false;
-            if(cardStackTo.size()-1 >= 0){
-                if(game.deck.getIsFacingUp(cardStackTo.get(cardStackTo.size()-1))){
-                    card2Up = true;
-                }
+            if(facingUp >= 1){
+                card2Up = true;
             }
             //IF BOTH ARE UP, return TO PASS SCORING
             if(card1Up && card2Up){
-                lastMove = "leetSwitch";
-                return;
+                bonusType = "splitManeuver";
+                bonusParams = cardStackFrom.get(cardStackFrom.size()-1);
             }
         }
 
         //
         if(cardStackTo.size()-2 >= 0){
             if(game.deck.getIsFacingUp(cardStackTo.get(cardStackTo.size() - 2))){
-                game.scoreKeeper.checkForUniqueMove(cardName, cardStackTo.get(cardStackTo.size() - 2), false, cameFromSuiteStack);
+                game.scoreKeeper.checkForUniqueMove(cardName, cardStackTo.get(cardStackTo.size() - 2), false, cameFromSuiteStack, bonusType, bonusParams);
             }else{
-                game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack);
+                game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack, bonusType, bonusParams);
             }
         }else{
-            game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack);
+            game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack, bonusType, bonusParams);
         }
-
-        //SET lastMove
-        lastMove = "toStack";
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////

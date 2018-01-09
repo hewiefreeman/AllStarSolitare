@@ -152,7 +152,7 @@ class Game {
 
             @Override
             public void onFinish() {
-                initGame();
+                startGame();
             }
         };
     }
@@ -176,7 +176,7 @@ class Game {
         animationY.start();
     }
 
-    void initGame(){
+    void startGame(){
         //START TIMER
         gameBoardTimer.initTimer(mainLayout);
 

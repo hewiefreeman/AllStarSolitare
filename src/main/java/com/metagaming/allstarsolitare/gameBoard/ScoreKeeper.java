@@ -5,108 +5,116 @@ import android.widget.TextView;
 
 import com.metagaming.allstarsolitare.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class ScoreKeeper {
 
     private String TAG = "SCORE_KEEPER";
-    private Game game;
 
+    private Game game;
     TextView scoreText;
 
     //
-    List<String> movesList;
-    int movesThisTurn;
-
-    //
-    int yourScore;
+    UniqueMoves uniqueMoves;
+    int uniqueMovesThisTurn;
     int timesThroughDeck;
+    int yourScore;
 
-    //
-    private final int points_unique_move = 50;
-    private final int points_ace_pile = 200;
+    //SCORING DEFINITIONS
+    private final int points_unique_move = 30;
+    private final int points_ace_pile = 120;
+    private final int points_deck_reset_base = 30;
+    private final int points_deck_reset_increment = 100;
+    private final int moves_until_combo = 2;
     private final int points_combo_base = 15;
     private final int points_combo_increment = 10;
-    private final int points_leet_switch = 175;
+    private final int points_split_maneuver = 100;
 
+    //
     void init(Game tempGame){
         game = tempGame;
         scoreText = game.mainLayout.findViewById(R.id.game_board_score_text);
-        movesList = new ArrayList<>();
-        movesThisTurn = 0;
+        uniqueMoves = new UniqueMoves();
+        uniqueMoves.init();
+        uniqueMovesThisTurn = 0;
         yourScore = 0;
         timesThroughDeck = 0;
     }
 
-    void checkForUniqueMove(String cardPlacing, String cardTo, Boolean toSuiteStack, Boolean fromSuiteStack){
+    //
+    void checkForUniqueMove(String cardPlacing, String cardTo, Boolean toSuiteStack,
+                            Boolean fromSuiteStack, String bonusType, String bonusParams){
         String moveChecking;
         String moveCheckingReverse;
-        Boolean fromStackToStack = false;
 
         if(fromSuiteStack){
             //FROM A SUITE TO A FIELD STACK
-            moveChecking = cardPlacing+">suited";
-            moveCheckingReverse = "suited>"+cardPlacing;
+            moveChecking = "ss>"+cardPlacing;
+            moveCheckingReverse = cardPlacing+">ss";
         }else if(toSuiteStack){
-            //FROM A FIELD STACK TO A SUITE
-            moveChecking = cardPlacing+">suited";
-            moveCheckingReverse = "suited>"+cardPlacing;
+            //FROM DECK OR FIELD STACK TO A SUITE
+            moveChecking = cardPlacing+">ss";
+            moveCheckingReverse = "ss>"+cardPlacing;
         }else{
             //FROM STACK TO STACK
-            fromStackToStack = true;
             moveChecking = cardPlacing+">"+cardTo;
             moveCheckingReverse = cardTo+">"+cardPlacing;
         }
 
-        if(!movesList.contains(moveChecking) && !movesList.contains(moveCheckingReverse)){
-            givePoints(toSuiteStack, fromStackToStack);
+        if(!uniqueMoves.containsMove(moveChecking) && !uniqueMoves.containsMove(moveCheckingReverse)){
+            //IF MOVE WAS UNIQUE, GIVE POINTS AND ADD MOVE TO uniqueMovesList
+            uniqueMoves.addMove(moveChecking, bonusType, bonusParams);
+            if(!bonusType.equals("splitManeuver")){
+                uniqueMove(toSuiteStack, cardPlacing);
+            }
         }
-        movesList.add(moveChecking);
     }
 
-    private void givePoints(Boolean toSuiteStack, Boolean fromStackToStack){
+    //
+    private void uniqueMove(Boolean toSuiteStack, String cardPlacing){
 
         int bonusPoints = 0;
+        int pointsMade;
 
-        if(movesThisTurn >= 2){
-            bonusPoints = 15+(10*(movesThisTurn-1));
+        if(uniqueMovesThisTurn >= moves_until_combo){
+            bonusPoints = points_combo_base+(points_combo_increment*(uniqueMovesThisTurn -1));
         }
 
         Log.d(TAG, "BONUS POINTS: "+bonusPoints);
-        Log.d(TAG, "MOVES THIS TURN: "+movesThisTurn);
+        Log.d(TAG, "MOVES THIS TURN: "+ uniqueMovesThisTurn);
 
         if(toSuiteStack){
             //SUITE STACK POINTS
-            //ADD BONUS POINTS FOR A leetSwitch
-            if(game.logicHelper.lastMove.equals("leetSwitch")){
-                bonusPoints += 175;
-                Log.d(TAG, "LEETSWITCH BONUS POINTS GIVEN: "+175);
+            if(uniqueMoves.checkForSplitManeuverSuite(cardPlacing)){
+                bonusPoints += points_split_maneuver;
+                Log.d(TAG, "SPLIT MANEUVER POINTS: "+points_split_maneuver);
             }
-            //
-            yourScore += 200+bonusPoints;
-            Log.d(TAG, "POINTS GIVEN: "+(200+bonusPoints));
+            pointsMade = points_ace_pile+bonusPoints;
+            Log.d(TAG, "POINTS GIVEN: "+pointsMade);
         }else{
             //UNIQUE MOVE POINTS
-            yourScore += 50+bonusPoints;
-            Log.d(TAG, "POINTS GIVEN: "+(50+bonusPoints));
+            pointsMade = points_unique_move+bonusPoints;
+            Log.d(TAG, "POINTS GIVEN: "+pointsMade);
         }
 
+        yourScore += pointsMade;
+        uniqueMoves.getLastMove()[3] = pointsMade;
         scoreText.setText(String.valueOf(yourScore));
 
-        movesThisTurn++;
+        uniqueMovesThisTurn++;
     }
 
     void drawnFromDeck(){
-        movesThisTurn = 0;
+        uniqueMovesThisTurn = 0;
     }
 
     void resetDeck(){
-        int pointsToRemove = (20+(timesThroughDeck*5))-(5*movesThisTurn);
+        //REMOVE POINTS FOR TURNING DECK OVER
+        int pointsToRemove = (points_deck_reset_base+(timesThroughDeck*points_deck_reset_increment));
         if(pointsToRemove > 0){
             yourScore -= pointsToRemove;
+            scoreText.setText(String.valueOf(yourScore));
         }
+        //
         timesThroughDeck++;
-        movesThisTurn = 0;
+        uniqueMovesThisTurn = 0;
     }
 }

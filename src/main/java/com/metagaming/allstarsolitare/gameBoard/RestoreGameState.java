@@ -435,7 +435,7 @@ class RestoreGameState {
             if(cardDifference > 0){
                 game.setUpTimer = game.makeSetupTimer(cardDifference * 100 + 1000).start();
             }else{
-                game.initGame();
+                game.startGame();
             }
         }
 
@@ -449,9 +449,15 @@ class RestoreGameState {
 
         //RESTORE SCORE
         game.scoreKeeper.yourScore = restoreBundle.getInt("yourScore");
-        game.scoreKeeper.movesThisTurn = restoreBundle.getInt("movesThisTurn");
+        game.scoreKeeper.uniqueMovesThisTurn = restoreBundle.getInt("uniqueMovesThisTurn");
         game.scoreKeeper.timesThroughDeck = restoreBundle.getInt("timesThroughDeck");
-        game.scoreKeeper.movesList = restoreBundle.getStringArrayList("movesList");
-        game.scoreKeeper.scoreText.setText(String.valueOf(game.scoreKeeper.yourScore));
+        String[] savedMoves = restoreBundle.getStringArray("savedMoves");
+        if(savedMoves != null){
+            for(String savedMove : savedMoves){
+                String[] savedMoveArray = savedMove.split(",");
+                game.scoreKeeper.uniqueMoves.addMove(savedMoveArray[0], savedMoveArray[1], savedMoveArray[2]);
+                game.scoreKeeper.uniqueMoves.getLastMove()[3] = Integer.parseInt(savedMoveArray[3]);
+            }
+        }
     }
 }

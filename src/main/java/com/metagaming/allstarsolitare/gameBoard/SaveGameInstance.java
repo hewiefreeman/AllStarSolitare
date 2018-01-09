@@ -3,7 +3,6 @@ package com.metagaming.allstarsolitare.gameBoard;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.List;
 
 class SaveGameInstance {
 
@@ -58,9 +57,14 @@ class SaveGameInstance {
         //TIME AND SCORE
         bundle.putLong("timeElapsed", game.gameBoardTimer.timeElapsed);
         bundle.putInt("yourScore", game.scoreKeeper.yourScore);
-        bundle.putInt("movesThisTurn", game.scoreKeeper.movesThisTurn);
+        bundle.putInt("uniqueMovesThisTurn", game.scoreKeeper.uniqueMovesThisTurn);
         bundle.putInt("timesThroughDeck", game.scoreKeeper.timesThroughDeck);
-        bundle.putStringArrayList("movesList", (ArrayList<String>) game.scoreKeeper.movesList);
+        String[] savedMoves = new String[game.scoreKeeper.uniqueMoves.uniqueMovesList.size()];
+        for(int i = 0; i < game.scoreKeeper.uniqueMoves.uniqueMovesList.size()-1; i++){
+            Object[] tempMove = game.scoreKeeper.uniqueMoves.uniqueMovesList.get(i);
+            savedMoves[i] = tempMove[0]+","+tempMove[1]+","+tempMove[2]+","+tempMove[3];
+        }
+        bundle.putStringArray("savedMoves", savedMoves);
 
         //
         return bundle;
