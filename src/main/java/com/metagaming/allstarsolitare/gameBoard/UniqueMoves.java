@@ -1,5 +1,7 @@
 package com.metagaming.allstarsolitare.gameBoard;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +41,8 @@ class UniqueMoves {
     }
 
     Object[] getLastMove(){
-        if(uniqueMovesList.size()-1 >= 0){
-            return uniqueMovesList.get(uniqueMovesList.size() - 1);
+        if(uniqueMovesList.size()-2 >= 0){
+            return uniqueMovesList.get(uniqueMovesList.size()-2);
         }else{
             return null;
         }
@@ -62,8 +64,7 @@ class UniqueMoves {
 
     // AN ACE MANEUVER IS WHEN YOU SPLIT A FIELD STACK TO UNCOVER A CARD TO PUT
     // IN AN ACE PILE.
-    Boolean checkForSplitManeuverSuite(String cardPlacing){
-        return (getLastMove()[1].equals("splitManeuver")
-                && getLastMove()[2].equals(cardPlacing));
+    Boolean checkForSplitManeuverSuite(String cardPlacing) {
+        return getLastMove() != null && (getLastMove()[1].equals("splitManeuver") && getLastMove()[2].equals(cardPlacing));
     }
 }

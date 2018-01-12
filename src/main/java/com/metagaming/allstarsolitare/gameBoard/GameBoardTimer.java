@@ -14,12 +14,14 @@ import static com.google.android.gms.internal.zzahn.runOnUiThread;
 
 public class GameBoardTimer {
 
+    Game game;
     long startTime;
     long timeElapsed;
     TextView timerText;
     Timer theTimer;
 
-    void initTimer(FrameLayout mainLayout){
+    void initTimer(Game tempGame, FrameLayout mainLayout){
+        game = tempGame;
         timerText = mainLayout.findViewById(R.id.game_board_timer_text);
         startTime = System.currentTimeMillis();
         startTimer();

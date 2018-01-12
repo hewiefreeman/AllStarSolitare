@@ -150,13 +150,13 @@ public class GameBoardActivity extends AppCompatActivity {
     protected void onPause() {
         if(game.inSetup){
             game.setUpTimer.cancel();
+        }else{
+            game.gameBoardTimer.pauseTimer();
         }
 
         pausingActivity = true;
         this.onSaveInstanceState(new Bundle());
         pausingActivity = false;
-
-        game.gameBoardTimer.pauseTimer();
 
         Log.d(TAG, "PAUSED ACTIVITY");
 

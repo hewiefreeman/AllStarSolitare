@@ -88,15 +88,14 @@ class ScoreKeeper {
                 Log.d(TAG, "SPLIT MANEUVER POINTS: "+points_split_maneuver);
             }
             pointsMade = points_ace_pile+bonusPoints;
-            Log.d(TAG, "POINTS GIVEN: "+pointsMade);
         }else{
             //UNIQUE MOVE POINTS
             pointsMade = points_unique_move+bonusPoints;
-            Log.d(TAG, "POINTS GIVEN: "+pointsMade);
         }
 
+        Log.d(TAG, "POINTS GIVEN: "+pointsMade);
         yourScore += pointsMade;
-        uniqueMoves.getLastMove()[3] = pointsMade;
+        uniqueMoves.uniqueMovesList.get(uniqueMoves.uniqueMovesList.size()-1)[3] = pointsMade;
         scoreText.setText(String.valueOf(yourScore));
 
         uniqueMovesThisTurn++;

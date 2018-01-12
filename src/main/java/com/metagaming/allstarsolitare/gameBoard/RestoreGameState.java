@@ -456,8 +456,9 @@ class RestoreGameState {
             for(String savedMove : savedMoves){
                 String[] savedMoveArray = savedMove.split(",");
                 game.scoreKeeper.uniqueMoves.addMove(savedMoveArray[0], savedMoveArray[1], savedMoveArray[2]);
-                game.scoreKeeper.uniqueMoves.getLastMove()[3] = Integer.parseInt(savedMoveArray[3]);
+                game.scoreKeeper.uniqueMoves.uniqueMovesList.get(game.scoreKeeper.uniqueMoves.uniqueMovesList.size()-1)[3] = Integer.parseInt(savedMoveArray[3]);
             }
         }
+        game.scoreKeeper.scoreText.setText(String.valueOf(game.scoreKeeper.yourScore));
     }
 }

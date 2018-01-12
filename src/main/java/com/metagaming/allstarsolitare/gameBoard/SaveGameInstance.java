@@ -60,9 +60,9 @@ class SaveGameInstance {
         bundle.putInt("uniqueMovesThisTurn", game.scoreKeeper.uniqueMovesThisTurn);
         bundle.putInt("timesThroughDeck", game.scoreKeeper.timesThroughDeck);
         String[] savedMoves = new String[game.scoreKeeper.uniqueMoves.uniqueMovesList.size()];
-        for(int i = 0; i < game.scoreKeeper.uniqueMoves.uniqueMovesList.size()-1; i++){
+        for(int i = 0; i < game.scoreKeeper.uniqueMoves.uniqueMovesList.size(); i++){
             Object[] tempMove = game.scoreKeeper.uniqueMoves.uniqueMovesList.get(i);
-            savedMoves[i] = tempMove[0]+","+tempMove[1]+","+tempMove[2]+","+tempMove[3];
+            savedMoves[i] = ""+tempMove[0]+","+tempMove[1]+","+tempMove[2]+","+tempMove[3];
         }
         bundle.putStringArray("savedMoves", savedMoves);
 

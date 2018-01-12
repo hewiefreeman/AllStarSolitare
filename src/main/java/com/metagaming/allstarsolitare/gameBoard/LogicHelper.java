@@ -365,6 +365,7 @@ public class LogicHelper {
             if(card1Up && card2Up){
                 bonusType = "splitManeuver";
                 bonusParams = cardStackFrom.get(cardStackFrom.size()-1);
+                Log.d(TAG, "SPLIT MANEUVER: "+bonusParams);
             }
         }
 

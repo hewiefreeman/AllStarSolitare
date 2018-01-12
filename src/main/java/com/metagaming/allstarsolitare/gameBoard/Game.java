@@ -81,11 +81,12 @@ class Game {
     int setupRestores;
 
     //
-    Boolean gameInited = false;
+    Boolean gameInited;
 
     void initGame(Context context, Boolean gameRestored){
         gameContext = context;
         inSetup = false;
+        gameInited = false;
         setupRestores = 0;
 
         //HELPERS
@@ -114,6 +115,7 @@ class Game {
     void setUpGame(){
         //INIT VARIABLES
         inSetup = true;
+        gameInited = false;
         initVariables();
         setupCardOn = 0;
 
@@ -177,9 +179,6 @@ class Game {
     }
 
     void startGame(){
-        //START TIMER
-        gameBoardTimer.initTimer(mainLayout);
-
         //FLIP STARTING CARDS
         for(int i = 0; i < 7; i++){
             String cardName = logicHelper.getFieldStackList(i+1).get(i);
@@ -200,6 +199,9 @@ class Game {
         //
         gameInited = true;
         inSetup = false;
+
+        //START TIMER
+        gameBoardTimer.initTimer(Game.this, mainLayout);
     }
 
     void initVariables(){
