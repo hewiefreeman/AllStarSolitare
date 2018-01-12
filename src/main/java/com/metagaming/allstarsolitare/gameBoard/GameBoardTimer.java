@@ -1,5 +1,6 @@
 package com.metagaming.allstarsolitare.gameBoard;
 
+import android.annotation.SuppressLint;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -14,14 +15,12 @@ import static com.google.android.gms.internal.zzahn.runOnUiThread;
 
 public class GameBoardTimer {
 
-    Game game;
     long startTime;
     long timeElapsed;
     TextView timerText;
     Timer theTimer;
 
-    void initTimer(Game tempGame, FrameLayout mainLayout){
-        game = tempGame;
+    void initTimer(FrameLayout mainLayout){
         timerText = mainLayout.findViewById(R.id.game_board_timer_text);
         startTime = System.currentTimeMillis();
         startTimer();
@@ -48,11 +47,12 @@ public class GameBoardTimer {
         theTimer.cancel();
     }
 
+    @SuppressLint("SimpleDateFormat")
     public String getTime() {
         long nowTime = System.currentTimeMillis();
         timeElapsed = nowTime - startTime;
         Date date = new Date(timeElapsed);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
         return simpleDateFormat.format(date);
     }
 }

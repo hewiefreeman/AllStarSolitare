@@ -1,6 +1,7 @@
 package com.metagaming.allstarsolitare.gameBoard;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.CountDownTimer;
@@ -15,11 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by LarryJosher on 11/30/2017.
- */
-
-public class LogicHelper {
+class LogicHelper {
 
     private Game game;
     private Context context;
@@ -114,6 +111,7 @@ public class LogicHelper {
         }
 
         String[] nameSplit = cardName.split("_");
+        //noinspection IfCanBeSwitch
         if(nameSplit[1].equals("s")){
             //TRY SPADES STACK
             if(game.deck.spadeStack.size() == 0 && nameSplit[0].equals("a")){
@@ -225,6 +223,7 @@ public class LogicHelper {
     //   VALID MATCH HANDLERS   //////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @SuppressLint("ClickableViewAccessibility")
     private void validSuiteStackMatch(String cardName, List<String> toSuit, Point location){
         String stackFrom = game.deck.getCardStackLocation(cardName);
         List<String> cardStackFrom = getFieldStackList(stackFrom);
@@ -390,6 +389,7 @@ public class LogicHelper {
         String cardStackLocation = game.deck.getCardStackLocation(cardName);
         List<String> cardStack = getFieldStackList(cardStackLocation);
 
+        //noinspection IfCanBeSwitch
         if(stackFrom.equals("deck")){
             //CAME FROM DECK
             CardView cardView = game.mainLayout.findViewById(game.deck.getCardId(cardName));
@@ -689,6 +689,7 @@ public class LogicHelper {
     }
 
     private Point getFieldStackLocation(String numb, Game gameObj){
+        //noinspection IfCanBeSwitch
         if(numb.equals("1")){
             return gameObj.fieldStackLocation1;
         }else if(numb.equals("2")){
@@ -745,6 +746,7 @@ public class LogicHelper {
     }
 
     List<String> getFieldStackList(String numb){
+        //noinspection IfCanBeSwitch
         if(numb.equals("1")){
             return game.deck.fieldStack1;
         }else if(numb.equals("2")){

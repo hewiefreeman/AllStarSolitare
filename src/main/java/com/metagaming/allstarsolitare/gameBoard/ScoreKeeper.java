@@ -9,7 +9,6 @@ class ScoreKeeper {
 
     private String TAG = "SCORE_KEEPER";
 
-    private Game game;
     TextView scoreText;
 
     //
@@ -30,8 +29,7 @@ class ScoreKeeper {
 
     //
     void init(Game tempGame){
-        game = tempGame;
-        scoreText = game.mainLayout.findViewById(R.id.game_board_score_text);
+        scoreText = tempGame.mainLayout.findViewById(R.id.game_board_score_text);
         uniqueMoves = new UniqueMoves();
         uniqueMoves.init();
         uniqueMovesThisTurn = 0;

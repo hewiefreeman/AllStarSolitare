@@ -1,7 +1,5 @@
 package com.metagaming.allstarsolitare.gameBoard;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,25 +20,7 @@ class UniqueMoves {
         uniqueMovesList.add(new Object[]{fromTo, bonusType, bonusParams, 0});
     }
 
-    int getMoveIndex(String theMove){
-        for(int i = 0; i < uniqueMovesList.size(); i++){
-            if(uniqueMovesList.get(i)[0].equals(theMove)){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    int getPoints(String theMove){
-        for(int i = 0; i < uniqueMovesList.size(); i++){
-            if(uniqueMovesList.get(i)[0].equals(theMove)){
-                return (int) uniqueMovesList.get(i)[3];
-            }
-        }
-        return -1;
-    }
-
-    Object[] getLastMove(){
+    private Object[] getLastMove(){
         if(uniqueMovesList.size()-2 >= 0){
             return uniqueMovesList.get(uniqueMovesList.size()-2);
         }else{
