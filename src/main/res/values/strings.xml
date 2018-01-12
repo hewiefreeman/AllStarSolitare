@@ -26,8 +26,8 @@
     <string name="game_select_log_out_dialog">Log out?</string>
     <string name="game_select_log_out_dialog_saved">(Game saved)</string>
 
-    <string name="game_select_menu_your_scores">Your Scores</string>
-    <string name="game_select_menu_leader_board">Leaderboard</string>
+    <string name="game_select_menu_your_scores">High Scores</string>
+    <string name="game_select_menu_leader_board">Leader-board</string>
     <string name="game_select_menu_log_out">Log Out</string>
 
     <string name="play_single">Play Single-Draw</string>
