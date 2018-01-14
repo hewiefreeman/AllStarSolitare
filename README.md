@@ -1,4 +1,4 @@
-<h1>All-Star Solitair</h1>
+<h1>All-Star Solitaire</h1>
 
 A native Android Solitaire game, which was made for a Udacity project. All-Star Solitaire is still under development and will be released to the Google Play Store once completed.
     
