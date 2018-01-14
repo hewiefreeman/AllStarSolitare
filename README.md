@@ -6,4 +6,4 @@ Most of the Solitaire game logic can be reused for other solitaire apps or Java 
 
 <h2>How to reuse:</h2>
 
-All the game logic resides in _src/main/java/com/metagaming/allstarsolitare/gameBoard_
+All the game logic resides in *src/main/java/com/metagaming/allstarsolitare/gameBoard*
