@@ -201,7 +201,7 @@ class Game {
         inSetup = false;
 
         //START TIMER
-        gameBoardTimer.initTimer(Game.this, mainLayout);
+        gameBoardTimer.initTimer(mainLayout);
     }
 
     void initVariables(){

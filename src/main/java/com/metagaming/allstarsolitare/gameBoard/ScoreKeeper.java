@@ -23,9 +23,10 @@ class ScoreKeeper {
     private final int points_deck_reset_base = 30;
     private final int points_deck_reset_increment = 100;
     private final int moves_until_combo = 2;
-    private final int points_combo_base = 15;
-    private final int points_combo_increment = 10;
-    private final int points_split_maneuver = 100;
+    private final int points_combo_base = 20;
+    private final int points_combo_increment = 15;
+    private final int points_split_maneuver = 150;
+    private final int points_king_swap = 200;
 
     //
     void init(Game tempGame){
@@ -38,7 +39,7 @@ class ScoreKeeper {
     }
 
     //
-    void checkForUniqueMove(String cardPlacing, String cardTo, Boolean toSuiteStack,
+    void checkForUniqueMove(String cardPlacing, String cardTo, Boolean toSuiteStack, int cardStackTo,
                             Boolean fromSuiteStack, String bonusType, String bonusParams){
         String moveChecking;
         String moveCheckingReverse;
@@ -61,13 +62,13 @@ class ScoreKeeper {
             //IF MOVE WAS UNIQUE, GIVE POINTS AND ADD MOVE TO uniqueMovesList
             uniqueMoves.addMove(moveChecking, bonusType, bonusParams);
             if(!bonusType.equals("splitManeuver")){
-                uniqueMove(toSuiteStack, cardPlacing);
+                uniqueMove(toSuiteStack, cardStackTo, cardPlacing);
             }
         }
     }
 
     //
-    private void uniqueMove(Boolean toSuiteStack, String cardPlacing){
+    private void uniqueMove(Boolean toSuiteStack, int cardStackTo, String cardPlacing){
 
         int bonusPoints = 0;
         int pointsMade;
@@ -88,6 +89,10 @@ class ScoreKeeper {
             pointsMade = points_ace_pile+bonusPoints;
         }else{
             //UNIQUE MOVE POINTS
+            if(cardPlacing.split("_")[0].equals("k") && uniqueMoves.checkForKingSwap(cardStackTo)){
+                bonusPoints += points_king_swap;
+                Log.d(TAG, "KING SWAP POINTS: "+points_king_swap);
+            }
             pointsMade = points_unique_move+bonusPoints;
         }
 

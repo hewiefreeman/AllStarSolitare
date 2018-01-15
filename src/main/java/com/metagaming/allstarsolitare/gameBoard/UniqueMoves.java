@@ -47,4 +47,9 @@ class UniqueMoves {
     Boolean checkForSplitManeuverSuite(String cardPlacing) {
         return getLastMove() != null && (getLastMove()[1].equals("splitManeuver") && getLastMove()[2].equals(cardPlacing));
     }
+
+    // A KING SWAP IS WHEN YOU CLEAR A CARD STACK TO PLACE A KING THERE.
+    Boolean checkForKingSwap(int cardStackTo){
+        return getLastMove() != null && getLastMove()[1].equals("kingSwap") && getLastMove()[2].equals(String.valueOf(cardStackTo));
+    }
 }

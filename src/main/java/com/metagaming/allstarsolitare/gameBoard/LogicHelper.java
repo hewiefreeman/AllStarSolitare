@@ -265,9 +265,9 @@ class LogicHelper {
 
         //SCORING
         if(toSuit.size()-2 >= 0){
-            game.scoreKeeper.checkForUniqueMove(cardName, toSuit.get(toSuit.size() - 2), true, false, "", "");
+            game.scoreKeeper.checkForUniqueMove(cardName, toSuit.get(toSuit.size() - 2), true, 0, false, "", "");
         }else{
-            game.scoreKeeper.checkForUniqueMove(cardName, "empty", true, false, "", "");
+            game.scoreKeeper.checkForUniqueMove(cardName, "empty", true, 0, false, "", "");
         }
     }
 
@@ -348,35 +348,44 @@ class LogicHelper {
         }
         //SCORE JUDGEMENT
         if(cameFromFieldStack){
-            //CHECK IF CARD UNDER 1st IS FACE UP
-            Boolean card1Up = false;
-            if(cardStackFrom.size()-1 >= 0){
-                if(game.deck.getIsFacingUp(cardStackFrom.get(cardStackFrom.size()-1))){
-                    card1Up = true;
+            //FIRST CHECK IF THE STACK FROM IS EMPTY NOW, WHICH MEANS bonusType IS "kingSwap"
+            if(cardStackFrom.size() == 0){
+                //STACK FROM IS EMPTY
+                bonusType = "kingSwap";
+                bonusParams = stackFrom;
+
+            }else{
+                //STACK FROM IS NOT EMPTY
+                //CHECK IF TOP CARD OF STACK FROM IS FACE UP
+                Boolean card1Up = false;
+                if(cardStackFrom.size() - 1 >= 0){
+                    if(game.deck.getIsFacingUp(cardStackFrom.get(cardStackFrom.size() - 1))){
+                        card1Up = true;
+                    }
                 }
-            }
-            //CHECK IF CARD UNDER 2nd IS FACE UP
-            Boolean card2Up = false;
-            if(facingUp >= 1){
-                card2Up = true;
-            }
-            //IF BOTH ARE UP, return TO PASS SCORING
-            if(card1Up && card2Up){
-                bonusType = "splitManeuver";
-                bonusParams = cardStackFrom.get(cardStackFrom.size()-1);
-                Log.d(TAG, "SPLIT MANEUVER: "+bonusParams);
+                //CHECK IF THERE WERE FACING UP CARDS IN THE STACK TO BEFORE MOVE
+                Boolean card2Up = false;
+                if(facingUp >= 1){
+                    card2Up = true;
+                }
+                //IF BOTH CARDS ARE UP, MOVE WAS A SPLIT MANEUVER
+                if(card1Up && card2Up){
+                    bonusType = "splitManeuver";
+                    bonusParams = cardStackFrom.get(cardStackFrom.size() - 1);
+                    Log.d(TAG, "SPLIT MANEUVER: " + bonusParams);
+                }
             }
         }
 
         //
         if(cardStackTo.size()-2 >= 0){
             if(game.deck.getIsFacingUp(cardStackTo.get(cardStackTo.size() - 2))){
-                game.scoreKeeper.checkForUniqueMove(cardName, cardStackTo.get(cardStackTo.size() - 2), false, cameFromSuiteStack, bonusType, bonusParams);
+                game.scoreKeeper.checkForUniqueMove(cardName, cardStackTo.get(cardStackTo.size() - 2), false, stackNumbTo, cameFromSuiteStack, bonusType, bonusParams);
             }else{
-                game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack, bonusType, bonusParams);
+                game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, stackNumbTo, cameFromSuiteStack, bonusType, bonusParams);
             }
         }else{
-            game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, cameFromSuiteStack, bonusType, bonusParams);
+            game.scoreKeeper.checkForUniqueMove(cardName, "empty", false, stackNumbTo, cameFromSuiteStack, bonusType, bonusParams);
         }
     }
 
