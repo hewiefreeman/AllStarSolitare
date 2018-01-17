@@ -90,14 +90,14 @@ class Game {
         setupRestores = 0;
 
         //HELPERS
-        viewInflateHelper = new ViewInflateHelper();
-        viewInflateHelper.init(gameContext, cardsHolder, mainLayout);
         animationHelper = new AnimationHelper();
         logicHelper = new LogicHelper();
         logicHelper.init(this, gameContext);
         gameBoardTimer = new GameBoardTimer();
         scoreKeeper = new ScoreKeeper();
         scoreKeeper.init(this);
+        viewInflateHelper = new ViewInflateHelper();
+        viewInflateHelper.init(gameContext, cardsHolder, mainLayout, scoreKeeper.scoreText);
 
         //WHIP OUT AND SHUFFLE THE DECK
         deck = new Deck();
