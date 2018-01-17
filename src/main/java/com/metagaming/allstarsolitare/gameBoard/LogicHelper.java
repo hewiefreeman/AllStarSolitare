@@ -42,25 +42,25 @@ class LogicHelper {
     void checkDrag(int x, int y, String cardName){
         if(y >= game.fieldStackLocation1.y){
             //DRAGGED ONTO FIELD STACK...
-            if((x > game.fieldStackLocation1.x) && (x < game.fieldStackLocation1.x+game.cardHelper.cardWidth)){
+            if((x > game.fieldStackLocation1.x) && (x < game.fieldStackLocation1.x+game.viewInflateHelper.cardWidth)){
                 droppedCardOverCardStack(cardName, 1);
 
-            }else if((x > game.fieldStackLocation2.x) && (x < game.fieldStackLocation2.x+game.cardHelper.cardWidth)){
+            }else if((x > game.fieldStackLocation2.x) && (x < game.fieldStackLocation2.x+game.viewInflateHelper.cardWidth)){
                 droppedCardOverCardStack(cardName, 2);
 
-            }else if((x > game.fieldStackLocation3.x) && (x < game.fieldStackLocation3.x+game.cardHelper.cardWidth)){
+            }else if((x > game.fieldStackLocation3.x) && (x < game.fieldStackLocation3.x+game.viewInflateHelper.cardWidth)){
                 droppedCardOverCardStack(cardName, 3);
 
-            }else if((x > game.fieldStackLocation4.x) && (x < game.fieldStackLocation4.x+game.cardHelper.cardWidth)){
+            }else if((x > game.fieldStackLocation4.x) && (x < game.fieldStackLocation4.x+game.viewInflateHelper.cardWidth)){
                 droppedCardOverCardStack(cardName, 4);
 
-            }else if((x > game.fieldStackLocation5.x) && (x < game.fieldStackLocation5.x+game.cardHelper.cardWidth)){
+            }else if((x > game.fieldStackLocation5.x) && (x < game.fieldStackLocation5.x+game.viewInflateHelper.cardWidth)){
                 droppedCardOverCardStack(cardName, 5);
 
-            }else if((x > game.fieldStackLocation6.x) && (x < game.fieldStackLocation6.x+game.cardHelper.cardWidth)){
+            }else if((x > game.fieldStackLocation6.x) && (x < game.fieldStackLocation6.x+game.viewInflateHelper.cardWidth)){
                 droppedCardOverCardStack(cardName, 6);
 
-            }else if((x > game.fieldStackLocation7.x) && (x < game.fieldStackLocation7.x+game.cardHelper.cardWidth)){
+            }else if((x > game.fieldStackLocation7.x) && (x < game.fieldStackLocation7.x+game.viewInflateHelper.cardWidth)){
                 droppedCardOverCardStack(cardName, 7);
 
             }else{
@@ -68,7 +68,7 @@ class LogicHelper {
             }
         }if(y < game.fieldStackLocation1.y){
             if(x >= game.spadesPileLocation.x
-                    && x <= game.diamondsPileLocation.x+game.cardHelper.cardWidth){
+                    && x <= game.diamondsPileLocation.x+game.viewInflateHelper.cardWidth){
                 //DRAGGED INTO SUITE AREA
                 droppedCardOverAceStack(cardName);
             }else{

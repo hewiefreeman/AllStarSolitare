@@ -60,7 +60,7 @@ class Game {
     private CardView acePileBackground;
 
     //HELPERS
-    CardHelper cardHelper;
+    ViewInflateHelper viewInflateHelper;
     AnimationHelper animationHelper;
     LogicHelper logicHelper;
     GameBoardTimer gameBoardTimer;
@@ -90,8 +90,8 @@ class Game {
         setupRestores = 0;
 
         //HELPERS
-        cardHelper = new CardHelper();
-        cardHelper.init(gameContext, cardsHolder);
+        viewInflateHelper = new ViewInflateHelper();
+        viewInflateHelper.init(gameContext, cardsHolder, mainLayout);
         animationHelper = new AnimationHelper();
         logicHelper = new LogicHelper();
         logicHelper.init(this, gameContext);
@@ -121,7 +121,7 @@ class Game {
 
         //ADD CARDS TO DECK
         for(int i = 0; i < 52; i++){
-            deck.setId(cardHelper.createCard(deckLocation.x, deckLocation.y), deck.deckStack.get(i));
+            deck.setId(viewInflateHelper.createCard(deckLocation.x, deckLocation.y), deck.deckStack.get(i));
             //Log.d("DECK","CARD NAME: "+deck.deckStack.get(i)+"    --    CARD ID: "+deck.getCardId(deck.deckStack.get(i)));
         }
 
@@ -208,45 +208,45 @@ class Game {
         float cardRatio = (float) defaultCardHeight/defaultCardWidth;
         Log.d("GAME", "RATIO IS: "+cardRatio);
         final float cardShrinkAmount = defaultCardWidth-((screenWidth-((smallMargin*5)+(largeMargin*2)))/7);
-        cardHelper.cardWidth = Math.round(defaultCardWidth-cardShrinkAmount);
-        cardHelper.cardHeight = Math.round(cardHelper.cardWidth*(cardRatio))/*+Math.round(cardShrinkAmount*(cardRatio))*/;
+        viewInflateHelper.cardWidth = Math.round(defaultCardWidth-cardShrinkAmount);
+        viewInflateHelper.cardHeight = Math.round(viewInflateHelper.cardWidth*(cardRatio))/*+Math.round(cardShrinkAmount*(cardRatio))*/;
 
         //
-        stackTopOffsetSmall = cardHelper.cardHeight/10;
-        stackTopOffsetRevealed = cardHelper.cardHeight/3;
+        stackTopOffsetSmall = viewInflateHelper.cardHeight/10;
+        stackTopOffsetRevealed = viewInflateHelper.cardHeight/3;
 
         //SET CAMERA DISTANCE
         final float scale = gameContext.getResources().getDisplayMetrics().density;
-        cardHelper.cameraDistance = 4000*scale;
+        viewInflateHelper.cameraDistance = 4000*scale;
 
         //SET CARD STACK LOCATIONS
-        deckLocation.set((screenWidth-cardHelper.cardWidth)-largeMargin, (int)(largeMargin*1.5));
-        fieldStackLocation1.set(largeMargin, deckLocation.y+cardHelper.cardHeight+largeMargin);
-        fieldStackLocation2.set(largeMargin+cardHelper.cardWidth+smallMargin, deckLocation.y+cardHelper.cardHeight+largeMargin);
-        fieldStackLocation3.set(largeMargin+(cardHelper.cardWidth*2)+(smallMargin*2), deckLocation.y+cardHelper.cardHeight+largeMargin);
-        fieldStackLocation4.set(largeMargin+(cardHelper.cardWidth*3)+(smallMargin*3), deckLocation.y+cardHelper.cardHeight+largeMargin);
-        fieldStackLocation5.set(largeMargin+(cardHelper.cardWidth*4)+(smallMargin*4), deckLocation.y+cardHelper.cardHeight+largeMargin);
-        fieldStackLocation6.set(largeMargin+(cardHelper.cardWidth*5)+(smallMargin*5), deckLocation.y+cardHelper.cardHeight+largeMargin);
-        fieldStackLocation7.set(largeMargin+(cardHelper.cardWidth*6)+(smallMargin*6), deckLocation.y+cardHelper.cardHeight+largeMargin);
+        deckLocation.set((screenWidth- viewInflateHelper.cardWidth)-largeMargin, (int)(largeMargin*1.5));
+        fieldStackLocation1.set(largeMargin, deckLocation.y+ viewInflateHelper.cardHeight+largeMargin);
+        fieldStackLocation2.set(largeMargin+ viewInflateHelper.cardWidth+smallMargin, deckLocation.y+ viewInflateHelper.cardHeight+largeMargin);
+        fieldStackLocation3.set(largeMargin+(viewInflateHelper.cardWidth*2)+(smallMargin*2), deckLocation.y+ viewInflateHelper.cardHeight+largeMargin);
+        fieldStackLocation4.set(largeMargin+(viewInflateHelper.cardWidth*3)+(smallMargin*3), deckLocation.y+ viewInflateHelper.cardHeight+largeMargin);
+        fieldStackLocation5.set(largeMargin+(viewInflateHelper.cardWidth*4)+(smallMargin*4), deckLocation.y+ viewInflateHelper.cardHeight+largeMargin);
+        fieldStackLocation6.set(largeMargin+(viewInflateHelper.cardWidth*5)+(smallMargin*5), deckLocation.y+ viewInflateHelper.cardHeight+largeMargin);
+        fieldStackLocation7.set(largeMargin+(viewInflateHelper.cardWidth*6)+(smallMargin*6), deckLocation.y+ viewInflateHelper.cardHeight+largeMargin);
         spadesPileLocation.set(largeMargin, deckLocation.y);
-        clubsPileLocation.set(largeMargin+cardHelper.cardWidth+smallMargin, deckLocation.y);
-        heartsPileLocation.set(largeMargin+(cardHelper.cardWidth*2)+(smallMargin*2), deckLocation.y);
-        diamondsPileLocation.set(largeMargin+(cardHelper.cardWidth*3)+(smallMargin*3), deckLocation.y);
+        clubsPileLocation.set(largeMargin+ viewInflateHelper.cardWidth+smallMargin, deckLocation.y);
+        heartsPileLocation.set(largeMargin+(viewInflateHelper.cardWidth*2)+(smallMargin*2), deckLocation.y);
+        diamondsPileLocation.set(largeMargin+(viewInflateHelper.cardWidth*3)+(smallMargin*3), deckLocation.y);
         deckLocation.set(fieldStackLocation7.x, (int)(largeMargin*1.5));
-        handLocationSingle.set((int)(deckLocation.x-(cardHelper.cardWidth*1.2)), deckLocation.y);
-        handLocationThree.set((deckLocation.x-(cardHelper.cardWidth*2))-smallMargin, deckLocation.y);
+        handLocationSingle.set((int)(deckLocation.x-(viewInflateHelper.cardWidth*1.2)), deckLocation.y);
+        handLocationThree.set((deckLocation.x-(viewInflateHelper.cardWidth*2))-smallMargin, deckLocation.y);
 
         //SET CARD RESET BUTTON
         deckResetBtn.setX(deckLocation.x);
         deckResetBtn.setY(deckLocation.y);
-        CardView.LayoutParams deckResetParams = new CardView.LayoutParams(cardHelper.cardWidth, cardHelper.cardHeight);
+        CardView.LayoutParams deckResetParams = new CardView.LayoutParams(viewInflateHelper.cardWidth, viewInflateHelper.cardHeight);
         deckResetBtn.setLayoutParams(deckResetParams);
         deckResetImage.setLayoutParams(deckResetParams);
 
         //SET ACE PILE BACKGROUND
         acePileBackground.setX(spadesPileLocation.x-smallMargin);
         acePileBackground.setY(spadesPileLocation.y-smallMargin);
-        CardView.LayoutParams acePileBGParams = new CardView.LayoutParams((cardHelper.cardWidth*4)+(smallMargin*5), cardHelper.cardHeight+(smallMargin*2));
+        CardView.LayoutParams acePileBGParams = new CardView.LayoutParams((viewInflateHelper.cardWidth*4)+(smallMargin*5), viewInflateHelper.cardHeight+(smallMargin*2));
         acePileBackground.setLayoutParams(acePileBGParams);
     }
 }

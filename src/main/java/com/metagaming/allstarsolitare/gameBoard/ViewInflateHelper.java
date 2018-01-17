@@ -14,17 +14,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class CardHelper {
+class ViewInflateHelper {
 
     float cameraDistance;
     int cardWidth;
     int cardHeight;
     private Context gameBoardContext;
-    private FrameLayout gameBoardFrameLayout;
+    private FrameLayout cardsHolder;
+    private FrameLayout mainLayout;
 
-    void init(Context tempContext, FrameLayout tempLayout){
+    void init(Context tempContext, FrameLayout tempLayout, FrameLayout tempMainLayout){
         gameBoardContext = tempContext;
-        gameBoardFrameLayout = tempLayout;
+        mainLayout = tempMainLayout;
+        cardsHolder = tempLayout;
     }
 
     List<Integer> createCard(int x, int y){
@@ -53,12 +55,45 @@ class CardHelper {
         imageView.setId(imageID);
 
         //
-        gameBoardFrameLayout.addView(newCard);
+        cardsHolder.addView(newCard);
         newCard.addView(imageView);
 
         //
         Picasso.with(gameBoardContext).load(R.drawable.back).noFade().into(imageView);
 
         return new ArrayList<>(Arrays.asList(cardID, imageID));
+    }
+
+    void createPointsDisplay(ArrayList<Object[]> displayList){
+        // displayList Object[] order:
+        // 0 (int)  :   points
+        // 1 (int)  :   colorID
+        // 2 (int)  :   imageID (-1 is no image)
+        for(int i = 0; i < displayList.size(); i++){
+            CardView pointsHolder = new CardView(gameBoardContext);
+            CardView.LayoutParams layoutParams = new CardView.LayoutParams(CardView.LayoutParams.WRAP_CONTENT, CardView.LayoutParams.WRAP_CONTENT);
+            pointsHolder.setLayoutParams(layoutParams);
+            pointsHolder.setCardElevation(0);
+            pointsHolder.setRadius(3);
+            pointsHolder.setCardBackgroundColor(gameBoardContext.getResources().getColor(R.color.transparent));
+
+            //MAKE LINEAR LAYOUT
+
+            //ADD THE IMAGE
+            ImageView imageView = new ImageView(gameBoardContext);
+            ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(30, 30);
+            imageView.setLayoutParams(imageParams);
+
+            //ADD THE POINTS TEXT
+
+            //INFLATE THE VIEW
+
+            //SET X AND Y
+            pointsHolder.setX(0);//////!!!!!
+            pointsHolder.setY(0);//////!!!!!
+
+            //APPLY ANIMATION
+        }
+
     }
 }

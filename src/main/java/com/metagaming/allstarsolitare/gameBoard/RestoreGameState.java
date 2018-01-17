@@ -88,7 +88,7 @@ class RestoreGameState {
                 }
             }
             List<Integer> tempStackCard =
-                    game.cardHelper.createCard(game.fieldStackLocation1.x, game.fieldStackLocation1.y+cardTopMargin);
+                    game.viewInflateHelper.createCard(game.fieldStackLocation1.x, game.fieldStackLocation1.y+cardTopMargin);
 
             game.deck.setId(tempStackCard, cardName);
 
@@ -117,7 +117,7 @@ class RestoreGameState {
                 }
             }
             List<Integer> tempStackCard =
-                    game.cardHelper.createCard(game.fieldStackLocation2.x, game.fieldStackLocation2.y+cardTopMargin);
+                    game.viewInflateHelper.createCard(game.fieldStackLocation2.x, game.fieldStackLocation2.y+cardTopMargin);
 
             game.deck.setId(tempStackCard, cardName);
 
@@ -146,7 +146,7 @@ class RestoreGameState {
                 }
             }
             List<Integer> tempStackCard =
-                    game.cardHelper.createCard(game.fieldStackLocation3.x, game.fieldStackLocation3.y+cardTopMargin);
+                    game.viewInflateHelper.createCard(game.fieldStackLocation3.x, game.fieldStackLocation3.y+cardTopMargin);
 
             game.deck.setId(tempStackCard, cardName);
 
@@ -175,7 +175,7 @@ class RestoreGameState {
                 }
             }
             List<Integer> tempStackCard =
-                    game.cardHelper.createCard(game.fieldStackLocation4.x, game.fieldStackLocation4.y+cardTopMargin);
+                    game.viewInflateHelper.createCard(game.fieldStackLocation4.x, game.fieldStackLocation4.y+cardTopMargin);
 
             game.deck.setId(tempStackCard, cardName);
 
@@ -204,7 +204,7 @@ class RestoreGameState {
                 }
             }
             List<Integer> tempStackCard =
-                    game.cardHelper.createCard(game.fieldStackLocation5.x, game.fieldStackLocation5.y+cardTopMargin);
+                    game.viewInflateHelper.createCard(game.fieldStackLocation5.x, game.fieldStackLocation5.y+cardTopMargin);
 
             game.deck.setId(tempStackCard, cardName);
 
@@ -233,7 +233,7 @@ class RestoreGameState {
                 }
             }
             List<Integer> tempStackCard =
-                    game.cardHelper.createCard(game.fieldStackLocation6.x, game.fieldStackLocation6.y+cardTopMargin);
+                    game.viewInflateHelper.createCard(game.fieldStackLocation6.x, game.fieldStackLocation6.y+cardTopMargin);
 
             game.deck.setId(tempStackCard, cardName);
 
@@ -262,7 +262,7 @@ class RestoreGameState {
                 }
             }
             List<Integer> tempStackCard =
-                    game.cardHelper.createCard(game.fieldStackLocation7.x, game.fieldStackLocation7.y+cardTopMargin);
+                    game.viewInflateHelper.createCard(game.fieldStackLocation7.x, game.fieldStackLocation7.y+cardTopMargin);
 
             game.deck.setId(tempStackCard, cardName);
 
@@ -284,7 +284,7 @@ class RestoreGameState {
             for(int i = 0; i < game.deck.spadeStack.size(); i++){
                 String cardName = game.deck.spadeStack.get(i);
                 List<Integer> tempStackCard =
-                        game.cardHelper.createCard(game.spadesPileLocation.x, game.spadesPileLocation.y);
+                        game.viewInflateHelper.createCard(game.spadesPileLocation.x, game.spadesPileLocation.y);
 
                 game.deck.setId(tempStackCard, cardName);
 
@@ -301,7 +301,7 @@ class RestoreGameState {
             for(int i = 0; i < game.deck.clubStack.size(); i++){
                 String cardName = game.deck.clubStack.get(i);
                 List<Integer> tempStackCard =
-                        game.cardHelper.createCard(game.clubsPileLocation.x, game.clubsPileLocation.y);
+                        game.viewInflateHelper.createCard(game.clubsPileLocation.x, game.clubsPileLocation.y);
 
                 game.deck.setId(tempStackCard, cardName);
 
@@ -318,7 +318,7 @@ class RestoreGameState {
             for(int i = 0; i < game.deck.heartStack.size(); i++){
                 String cardName = game.deck.heartStack.get(i);
                 List<Integer> tempStackCard =
-                        game.cardHelper.createCard(game.heartsPileLocation.x, game.heartsPileLocation.y);
+                        game.viewInflateHelper.createCard(game.heartsPileLocation.x, game.heartsPileLocation.y);
 
                 game.deck.setId(tempStackCard, cardName);
 
@@ -335,7 +335,7 @@ class RestoreGameState {
             for(int i = 0; i < game.deck.diamondStack.size(); i++){
                 String cardName = game.deck.diamondStack.get(i);
                 List<Integer> tempStackCard =
-                        game.cardHelper.createCard(game.diamondsPileLocation.x, game.diamondsPileLocation.y);
+                        game.viewInflateHelper.createCard(game.diamondsPileLocation.x, game.diamondsPileLocation.y);
 
                 game.deck.setId(tempStackCard, cardName);
 
@@ -354,7 +354,7 @@ class RestoreGameState {
         for(int i = 0; i < game.deck.deckStack.size(); i++){
             String cardName = game.deck.deckStack.get(i);
             List<Integer> tempStackCard =
-                    game.cardHelper.createCard(game.deckLocation.x, game.deckLocation.y);
+                    game.viewInflateHelper.createCard(game.deckLocation.x, game.deckLocation.y);
 
             game.deck.setId(tempStackCard, cardName);
 

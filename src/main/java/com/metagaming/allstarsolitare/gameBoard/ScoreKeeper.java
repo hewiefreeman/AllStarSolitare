@@ -112,7 +112,11 @@ class ScoreKeeper {
         //REMOVE POINTS FOR TURNING DECK OVER
         int pointsToRemove = (points_deck_reset_base+(timesThroughDeck*points_deck_reset_increment));
         if(pointsToRemove > 0){
-            yourScore -= pointsToRemove;
+            if(yourScore-pointsToRemove < 0){
+                yourScore = 0;
+            }else{
+                yourScore -= pointsToRemove;
+            }
             scoreText.setText(String.valueOf(yourScore));
         }
         //

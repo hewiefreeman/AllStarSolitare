@@ -162,7 +162,7 @@ public class CardTouchListener implements OnTouchListener {
                     }
                 }
             }else{
-                game.logicHelper.checkDrag((int) view.getX()+(game.cardHelper.cardWidth/2), (int) view.getY()+(game.cardHelper.cardHeight/2), cardName);
+                game.logicHelper.checkDrag((int) view.getX()+(game.viewInflateHelper.cardWidth/2), (int) view.getY()+(game.viewInflateHelper.cardHeight/2), cardName);
             }
 
             cardName = "";
