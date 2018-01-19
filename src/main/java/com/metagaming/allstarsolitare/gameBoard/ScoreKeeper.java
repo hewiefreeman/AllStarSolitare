@@ -5,10 +5,13 @@ import android.widget.TextView;
 
 import com.metagaming.allstarsolitare.R;
 
+import java.util.ArrayList;
+
 class ScoreKeeper {
 
     private String TAG = "SCORE_KEEPER";
 
+    Game game;
     TextView scoreText;
 
     //
@@ -30,6 +33,7 @@ class ScoreKeeper {
 
     //
     void init(Game tempGame){
+        game = tempGame;
         scoreText = tempGame.mainLayout.findViewById(R.id.game_board_score_text);
         uniqueMoves = new UniqueMoves();
         uniqueMoves.init();
@@ -72,35 +76,58 @@ class ScoreKeeper {
 
         int bonusPoints = 0;
         int pointsMade;
+        ArrayList<Object[]> displayList = new ArrayList<>();
 
-        if(uniqueMovesThisTurn >= moves_until_combo){
+        //LIMIT COMBO POINTS TO 10
+        if(uniqueMovesThisTurn >= moves_until_combo && uniqueMovesThisTurn < 10+moves_until_combo){
             bonusPoints = points_combo_base+(points_combo_increment*(uniqueMovesThisTurn -1));
+        }else if(uniqueMovesThisTurn >= 10+moves_until_combo){
+            bonusPoints = points_combo_base+(points_combo_increment*10);
         }
 
         Log.d(TAG, "BONUS POINTS: "+bonusPoints);
         Log.d(TAG, "MOVES THIS TURN: "+ uniqueMovesThisTurn);
 
+        // displayList Object[] order:
+        // 0 (int)  :   points
+        // 1 (int)  :   colorID
+        // 2 (int)  :   imageID (-1 is no image)
+
         if(toSuiteStack){
             //SUITE STACK POINTS
+            pointsMade = points_ace_pile;
+            Object[] pointsSuite = new Object[]{points_ace_pile, R.color.good, -1};
+            displayList.add(pointsSuite);
+            //
             if(uniqueMoves.checkForSplitManeuverSuite(cardPlacing)){
                 bonusPoints += points_split_maneuver;
+                Object[] splitManeuverSuite = new Object[]{points_split_maneuver, R.color.good, R.drawable.swap_ace};
+                displayList.add(splitManeuverSuite);
                 Log.d(TAG, "SPLIT MANEUVER POINTS: "+points_split_maneuver);
             }
-            pointsMade = points_ace_pile+bonusPoints;
         }else{
             //UNIQUE MOVE POINTS
+            pointsMade = points_unique_move;
+            Object[] pointsMove = new Object[]{points_ace_pile, R.color.good, -1};
+            displayList.add(pointsMove);
+            //
             if(cardPlacing.split("_")[0].equals("k") && uniqueMoves.checkForKingSwap(cardStackTo)){
                 bonusPoints += points_king_swap;
-                Log.d(TAG, "KING SWAP POINTS: "+points_king_swap);
+                Object[] kingSwap = new Object[]{points_king_swap, R.color.good, R.drawable.swap_king};
+                displayList.add(kingSwap);
+                Log.d(TAG, "KING SWAP POINTS: " + points_king_swap);
             }
-            pointsMade = points_unique_move+bonusPoints;
         }
 
         Log.d(TAG, "POINTS GIVEN: "+pointsMade);
-        yourScore += pointsMade;
+        yourScore += pointsMade+bonusPoints;
         uniqueMoves.uniqueMovesList.get(uniqueMoves.uniqueMovesList.size()-1)[3] = pointsMade;
         scoreText.setText(String.valueOf(yourScore));
 
+        //
+        game.viewInflateHelper.createPointsDisplay(displayList);
+
+        //
         uniqueMovesThisTurn++;
     }
 

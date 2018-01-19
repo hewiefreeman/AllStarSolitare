@@ -1,7 +1,10 @@
 package com.metagaming.allstarsolitare.gameBoard;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -74,47 +77,87 @@ class ViewInflateHelper {
         // displayList Object[] order:
         // 0 (int)  :   points
         // 1 (int)  :   colorID
-        // 2 (int)  :   colorFadedID
-        // 3 (int)  :   imageID (-1 is no image)
+        // 2 (int)  :   imageID (-1 is no image)
+
+        int xOffset = 0;
+
         for(int i = 0; i < displayList.size(); i++){
-            CardView pointsHolder = new CardView(gameBoardContext);
-            CardView.LayoutParams layoutParams = new CardView.LayoutParams(CardView.LayoutParams.WRAP_CONTENT, CardView.LayoutParams.WRAP_CONTENT);
+            //ADD THE IMAGE IF NEEDED
+            ImageView imageView = null;
+            if((int) displayList.get(i)[2] >= 0){
+                imageView = new ImageView(gameBoardContext);
+                ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(Math.round(scoreTextLayout.getHeight() * 1.5F), Math.round(scoreTextLayout.getHeight() * 1.5F));
+                imageView.setLayoutParams(imageParams);
+                imageView.setX((-1) * (scoreTextLayout.getHeight() * 0.25F));
+                imageView.setY((-1) * (scoreTextLayout.getHeight() * 0.25F));
+            }
+
+            //MAKE THE POINTS HOLDER AND DETERMINE IT'S WIDTH
+            int holderWidth;
+            if(imageView == null){
+                holderWidth = scoreTextLayout.getHeight()*5;
+            }else{
+                holderWidth = scoreTextLayout.getHeight()*8;
+            }
+            final CardView pointsHolder = new CardView(gameBoardContext);
+            CardView.LayoutParams layoutParams = new CardView.LayoutParams(holderWidth, scoreTextLayout.getHeight());
             pointsHolder.setLayoutParams(layoutParams);
             pointsHolder.setCardElevation(0);
-            pointsHolder.setRadius(3);
+            pointsHolder.setRadius(6);
             pointsHolder.setCardBackgroundColor(gameBoardContext.getResources().getColor((int) displayList.get(i)[1]));
-
-            //MAKE LINEAR LAYOUT
-            LinearLayout linearLayout = new LinearLayout(gameBoardContext);
-            LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            linearLayout.setLayoutParams(linearParams);
-            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-            //ADD THE IMAGE
-            ImageView imageView = new ImageView(gameBoardContext);
-            ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(30, 30);
-            imageView.setLayoutParams(imageParams);
-            imageView.setImageDrawable(gameBoardContext.getResources().getDrawable((int) displayList.get(i)[3]));
+            pointsHolder.setPaddingRelative(0, 0, scoreTextLayout.getPaddingEnd(), 0);
 
             //ADD THE POINTS TEXT
             TextView pointsText = new TextView(gameBoardContext);
             ViewGroup.LayoutParams pointsParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             pointsText.setLayoutParams(pointsParams);
-            pointsText.setText(String.valueOf(displayList.get(i)[0]));
+            pointsText.setText("+"+String.valueOf(displayList.get(i)[0]));
+            pointsText.setTextSize(Math.round(scoreTextLayout.getTextSize()));
+            pointsText.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
 
             //INFLATE THE VIEWS
             mainLayout.addView(pointsHolder);
-            pointsHolder.addView(linearLayout);
-            linearLayout.addView(imageView);
-            linearLayout.addView(pointsText);
+            if(imageView != null){
+                pointsHolder.addView(imageView);
+            }
+            pointsHolder.addView(pointsText);
 
             //SET X AND Y
-            pointsHolder.setX(scoreTextLayout.getX());//////!!!!!
-            pointsHolder.setY(scoreTextLayout.getY()-(scoreTextLayout.getHeight()+2));
+            pointsHolder.setX(scoreTextLayout.getX()-xOffset);
+            pointsHolder.setY(scoreTextLayout.getY()-(scoreTextLayout.getHeight()+(scoreTextLayout.getHeight() * 0.25F)));
+
+            //
+            xOffset += pointsHolder.getWidth()+(scoreTextLayout.getHeight() * 0.25F);
 
             //APPLY ANIMATION
-            animHelper.makeAnimator(pointsHolder, 2000, View.Y, pointsHolder.getY(), pointsHolder.getY()-pointsHolder.getHeight());
-        }
+            ObjectAnimator yAnim = animHelper.makeAnimator(pointsHolder, 2000, View.Y, pointsHolder.getY(), pointsHolder.getY()-pointsHolder.getHeight());
+            ObjectAnimator alphaAnim = animHelper.makeAnimator(pointsHolder, 2000, View.ALPHA, pointsHolder.getAlpha(), 0);
 
+            //DELETE VIEW WHEN ANIMATION IS OVER
+            yAnim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    mainLayout.removeView(pointsHolder);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+
+            yAnim.start();
+            alphaAnim.start();
+        }
     }
 }

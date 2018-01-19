@@ -27,5 +27,8 @@
 
     <!-- MISC COLORS -->
 
+    <color name="good">#0e7b0c</color>
+    <color name="bad">#7b0e0c</color>
     <color name="transparent">#00ffffff</color>
+
 </resources>

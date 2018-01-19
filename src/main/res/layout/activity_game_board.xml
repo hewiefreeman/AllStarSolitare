@@ -68,6 +68,7 @@
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:textColor="@color/text_white"
+        android:textSize="15sp"
         android:background="@drawable/score_bg_shape"
         android:layout_margin="10dp"/>
 
@@ -82,6 +83,7 @@
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:textColor="@color/text_white"
+        android:textSize="15sp"
         android:background="@drawable/score_bg_shape"
         android:layout_margin="10dp"/>
 
