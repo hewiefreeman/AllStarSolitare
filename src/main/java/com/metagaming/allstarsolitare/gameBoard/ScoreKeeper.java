@@ -108,7 +108,7 @@ class ScoreKeeper {
         }else{
             //UNIQUE MOVE POINTS
             pointsMade = points_unique_move;
-            Object[] pointsMove = new Object[]{points_ace_pile, R.color.good, -1};
+            Object[] pointsMove = new Object[]{points_unique_move, R.color.good, -1};
             displayList.add(pointsMove);
             //
             if(cardPlacing.split("_")[0].equals("k") && uniqueMoves.checkForKingSwap(cardStackTo)){

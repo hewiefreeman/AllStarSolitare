@@ -3,7 +3,10 @@ package com.metagaming.allstarsolitare.gameBoard;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.icu.util.MeasureUnit;
 import android.support.v7.widget.CardView;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,38 +85,40 @@ class ViewInflateHelper {
         int xOffset = 0;
 
         for(int i = 0; i < displayList.size(); i++){
-            //ADD THE IMAGE IF NEEDED
+            Drawable pointsDisplayBG = gameBoardContext.getDrawable(R.drawable.score_bg_shape_good);
+            String pointsPrefix = "+";
+            if((int) displayList.get(i)[0] < 0){
+                pointsDisplayBG = gameBoardContext.getDrawable(R.drawable.score_bg_shape_bad);
+                pointsPrefix = "-";
+            }
+
+            //MAKE THE HOLDER
+            final FrameLayout pointsHolder = new FrameLayout(gameBoardContext);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            pointsHolder.setLayoutParams(layoutParams);
+            pointsHolder.setX(scoreTextLayout.getX()-xOffset);
+            pointsHolder.setY(scoreTextLayout.getY()-(scoreTextLayout.getHeight()+(scoreTextLayout.getHeight() * 0.25F)));
+
+            //ADD A BONUS IMAGE
             ImageView imageView = null;
             if((int) displayList.get(i)[2] >= 0){
                 imageView = new ImageView(gameBoardContext);
                 ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(Math.round(scoreTextLayout.getHeight() * 1.5F), Math.round(scoreTextLayout.getHeight() * 1.5F));
                 imageView.setLayoutParams(imageParams);
-                imageView.setX((-1) * (scoreTextLayout.getHeight() * 0.25F));
-                imageView.setY((-1) * (scoreTextLayout.getHeight() * 0.25F));
+                imageView.setX(0);
+                imageView.setY(0);
+                imageView.setImageDrawable(gameBoardContext.getDrawable((int) displayList.get(i)[2]));
             }
-
-            //MAKE THE POINTS HOLDER AND DETERMINE IT'S WIDTH
-            int holderWidth;
-            if(imageView == null){
-                holderWidth = scoreTextLayout.getHeight()*5;
-            }else{
-                holderWidth = scoreTextLayout.getHeight()*8;
-            }
-            final CardView pointsHolder = new CardView(gameBoardContext);
-            CardView.LayoutParams layoutParams = new CardView.LayoutParams(holderWidth, scoreTextLayout.getHeight());
-            pointsHolder.setLayoutParams(layoutParams);
-            pointsHolder.setCardElevation(0);
-            pointsHolder.setRadius(6);
-            pointsHolder.setCardBackgroundColor(gameBoardContext.getResources().getColor((int) displayList.get(i)[1]));
-            pointsHolder.setPaddingRelative(0, 0, scoreTextLayout.getPaddingEnd(), 0);
 
             //ADD THE POINTS TEXT
             TextView pointsText = new TextView(gameBoardContext);
             ViewGroup.LayoutParams pointsParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             pointsText.setLayoutParams(pointsParams);
-            pointsText.setText("+"+String.valueOf(displayList.get(i)[0]));
-            pointsText.setTextSize(Math.round(scoreTextLayout.getTextSize()));
+            pointsText.setText(pointsPrefix+String.valueOf(displayList.get(i)[0]));
+            pointsText.setTextColor(gameBoardContext.getResources().getColor(R.color.text_white));
+            pointsText.setTextSize(TypedValue.COMPLEX_UNIT_PX, Math.round(scoreTextLayout.getTextSize()));
             pointsText.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
+            pointsText.setBackground(pointsDisplayBG);
 
             //INFLATE THE VIEWS
             mainLayout.addView(pointsHolder);
@@ -121,10 +126,6 @@ class ViewInflateHelper {
                 pointsHolder.addView(imageView);
             }
             pointsHolder.addView(pointsText);
-
-            //SET X AND Y
-            pointsHolder.setX(scoreTextLayout.getX()-xOffset);
-            pointsHolder.setY(scoreTextLayout.getY()-(scoreTextLayout.getHeight()+(scoreTextLayout.getHeight() * 0.25F)));
 
             //
             xOffset += pointsHolder.getWidth()+(scoreTextLayout.getHeight() * 0.25F);
