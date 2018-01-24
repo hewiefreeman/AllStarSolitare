@@ -87,17 +87,19 @@ class ViewInflateHelper {
         for(int i = 0; i < displayList.size(); i++){
             Drawable pointsDisplayBG = gameBoardContext.getDrawable(R.drawable.score_bg_shape_good);
             String pointsPrefix = "+";
+            int textBaseWidth;
+            int yOffset = 0;
+            if((int) displayList.get(i)[0] < 100){
+                textBaseWidth = Math.round(scoreTextLayout.getHeight()*1.4F);
+            }else{
+                textBaseWidth = Math.round(scoreTextLayout.getHeight()*1.6F);
+            }
+
+            int holderWidth = textBaseWidth;
             if((int) displayList.get(i)[0] < 0){
                 pointsDisplayBG = gameBoardContext.getDrawable(R.drawable.score_bg_shape_bad);
                 pointsPrefix = "-";
             }
-
-            //MAKE THE HOLDER
-            final FrameLayout pointsHolder = new FrameLayout(gameBoardContext);
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            pointsHolder.setLayoutParams(layoutParams);
-            pointsHolder.setX(scoreTextLayout.getX()-xOffset);
-            pointsHolder.setY(scoreTextLayout.getY()-(scoreTextLayout.getHeight()+(scoreTextLayout.getHeight() * 0.25F)));
 
             //ADD A BONUS IMAGE
             ImageView imageView = null;
@@ -108,17 +110,28 @@ class ViewInflateHelper {
                 imageView.setX(0);
                 imageView.setY(0);
                 imageView.setImageDrawable(gameBoardContext.getDrawable((int) displayList.get(i)[2]));
+
+                //
+                holderWidth += Math.round(scoreTextLayout.getHeight()*1.5F);
+                yOffset = Math.round(scoreTextLayout.getHeight() * 0.4F);
             }
+
+            //MAKE THE HOLDER
+            final FrameLayout pointsHolder = new FrameLayout(gameBoardContext);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(holderWidth, FrameLayout.LayoutParams.WRAP_CONTENT);
+            pointsHolder.setLayoutParams(layoutParams);
+            //pointsHolder.setBackgroundColor(gameBoardContext.getResources().getColor(R.color.text_white));
+
 
             //ADD THE POINTS TEXT
             TextView pointsText = new TextView(gameBoardContext);
-            ViewGroup.LayoutParams pointsParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ViewGroup.LayoutParams pointsParams = new ViewGroup.LayoutParams(textBaseWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
             pointsText.setLayoutParams(pointsParams);
             pointsText.setText(pointsPrefix+String.valueOf(displayList.get(i)[0]));
             pointsText.setTextColor(gameBoardContext.getResources().getColor(R.color.text_white));
             pointsText.setTextSize(TypedValue.COMPLEX_UNIT_PX, Math.round(scoreTextLayout.getTextSize()));
-            pointsText.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
             pointsText.setBackground(pointsDisplayBG);
+            pointsText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             //INFLATE THE VIEWS
             mainLayout.addView(pointsHolder);
@@ -127,12 +140,22 @@ class ViewInflateHelper {
             }
             pointsHolder.addView(pointsText);
 
+            //SET Xs/Ys
+            pointsHolder.setX(((scoreTextLayout.getX()+scoreTextLayout.getWidth())-holderWidth)-xOffset);
+            pointsHolder.setY((scoreTextLayout.getY()-(scoreTextLayout.getHeight()+(scoreTextLayout.getHeight() * 0.25F)))-yOffset);
+            pointsText.setX(holderWidth-textBaseWidth);
+            if(imageView != null){
+                pointsText.setY(Math.round(scoreTextLayout.getHeight() * 0.4F));
+            }
+
             //
-            xOffset += pointsHolder.getWidth()+(scoreTextLayout.getHeight() * 0.25F);
+            xOffset += holderWidth+(scoreTextLayout.getHeight() * 0.25F);
 
             //APPLY ANIMATION
-            ObjectAnimator yAnim = animHelper.makeAnimator(pointsHolder, 2000, View.Y, pointsHolder.getY(), pointsHolder.getY()-pointsHolder.getHeight());
-            ObjectAnimator alphaAnim = animHelper.makeAnimator(pointsHolder, 2000, View.ALPHA, pointsHolder.getAlpha(), 0);
+            ObjectAnimator yAnim = animHelper.makeAnimator(pointsHolder, 4000, View.Y,
+                    (scoreTextLayout.getY()-(scoreTextLayout.getHeight()+(scoreTextLayout.getHeight() * 0.25F)))-yOffset,
+                    ((scoreTextLayout.getY()-(scoreTextLayout.getHeight()+(scoreTextLayout.getHeight() * 0.25F)))-yOffset)-(scoreTextLayout.getHeight()*1.5F));
+            ObjectAnimator alphaAnim = animHelper.makeAnimator(pointsHolder, 4000, View.ALPHA, pointsHolder.getAlpha(), 0);
 
             //DELETE VIEW WHEN ANIMATION IS OVER
             yAnim.addListener(new Animator.AnimatorListener() {

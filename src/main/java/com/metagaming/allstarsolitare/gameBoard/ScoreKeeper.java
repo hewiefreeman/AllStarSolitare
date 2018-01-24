@@ -77,12 +77,25 @@ class ScoreKeeper {
         int bonusPoints = 0;
         int pointsMade;
         ArrayList<Object[]> displayList = new ArrayList<>();
+        Object[] comboPoints = null;
 
         //LIMIT COMBO POINTS TO 10
-        if(uniqueMovesThisTurn >= moves_until_combo && uniqueMovesThisTurn < 10+moves_until_combo){
-            bonusPoints = points_combo_base+(points_combo_increment*(uniqueMovesThisTurn -1));
-        }else if(uniqueMovesThisTurn >= 10+moves_until_combo){
+        if(uniqueMovesThisTurn >= moves_until_combo && uniqueMovesThisTurn < 9+moves_until_combo){
+            bonusPoints = points_combo_base+(points_combo_increment*(uniqueMovesThisTurn-(moves_until_combo-1)));
+
+            if(uniqueMovesThisTurn-(moves_until_combo-1) == 1){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_1x};
+            }else if(uniqueMovesThisTurn-(moves_until_combo-1) == 2){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_2x};
+            }else if(uniqueMovesThisTurn-(moves_until_combo-1) == 3){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_3x};
+            }else if(uniqueMovesThisTurn-(moves_until_combo-1) == 4){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_4x};
+            }else if(uniqueMovesThisTurn-(moves_until_combo-1) == 5){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_5x};
+            }else if(uniqueMovesThisTurn-(moves_until_combo-1) == 6){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_6x};
+            }else if(uniqueMovesThisTurn-(moves_until_combo-1) == 7){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_7x};
+            }else if(uniqueMovesThisTurn-(moves_until_combo-1) == 8){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_8x};
+            }else if(uniqueMovesThisTurn-(moves_until_combo-1) == 9){ comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_9x};
+            }
+        }else if(uniqueMovesThisTurn >= 9+moves_until_combo){
             bonusPoints = points_combo_base+(points_combo_increment*10);
+            comboPoints = new Object[]{bonusPoints, R.color.good, R.drawable.combo_10x};
         }
 
         Log.d(TAG, "BONUS POINTS: "+bonusPoints);
@@ -98,6 +111,9 @@ class ScoreKeeper {
             pointsMade = points_ace_pile;
             Object[] pointsSuite = new Object[]{points_ace_pile, R.color.good, -1};
             displayList.add(pointsSuite);
+            if(comboPoints != null){
+                displayList.add(comboPoints);
+            }
             //
             if(uniqueMoves.checkForSplitManeuverSuite(cardPlacing)){
                 bonusPoints += points_split_maneuver;
@@ -110,6 +126,9 @@ class ScoreKeeper {
             pointsMade = points_unique_move;
             Object[] pointsMove = new Object[]{points_unique_move, R.color.good, -1};
             displayList.add(pointsMove);
+            if(comboPoints != null){
+                displayList.add(comboPoints);
+            }
             //
             if(cardPlacing.split("_")[0].equals("k") && uniqueMoves.checkForKingSwap(cardStackTo)){
                 bonusPoints += points_king_swap;
@@ -119,7 +138,7 @@ class ScoreKeeper {
             }
         }
 
-        Log.d(TAG, "POINTS GIVEN: "+pointsMade);
+        Log.d(TAG, "POINTS GIVEN: "+(pointsMade+bonusPoints));
         yourScore += pointsMade+bonusPoints;
         uniqueMoves.uniqueMovesList.get(uniqueMoves.uniqueMovesList.size()-1)[3] = pointsMade;
         scoreText.setText(String.valueOf(yourScore));
